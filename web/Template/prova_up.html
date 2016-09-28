@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        File Upload to Database Demo
+        <form method="post" action="upload" enctype="multipart/form-data">
+        	Titolo opera:
+                <input type="text" name="titolo" size="50"/>
+                Autore:
+	        <input type="text" name="autore" size="50"/>
+                Editore:
+	        <input type="text" name="editore" size="50"/>
+                Descrizione:
+	        <input type="text" name="descrizione" size="50"/>
+                ISBN:
+	        <input type="text" name="isbn" size="50"/>
+                Anno pubblicazione :
+	        <input type="text" name="anno" size="50"/>
+                Lingua (it/en) :
+	        <input type="text" name="lingua" size="50"/>
+                Scaricabile? (si/no):
+	        <input type="text" name="download" size="50"/>
+                Link download :
+	        <input type="text" name="link_download" size="50"/>
+                Acquistabile? (si/no):
+	        <input type="text" name="buy" size="50"/>
+                Link acquisto :
+	        <input type="text" name="link_buy" size="50"/>
+                Photo: 
+                <input type="file" name="photo"/>
+		<input type="submit" value="Save">
+	    </form>
+    </body>
+</html>

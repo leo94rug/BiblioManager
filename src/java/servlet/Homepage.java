@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package servlet;
-import utilita.FreeMarker;
+import utilita.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,13 @@ public class Homepage extends HttpServlet{
  
     protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         Map<String,Object> data= new HashMap<String,Object>();
-FreeMarker.process("index.html", data, response, getServletContext());
+        if(Gestione.session_check(request)){
+            data.put("sessione", 1);
+        }
+        else{
+            data.put("sessione", 0);
+        }
+        FreeMarker.process("index.html", data, response, getServletContext());
 
     }
         @Override
