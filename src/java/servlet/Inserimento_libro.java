@@ -5,82 +5,71 @@
  */
 package servlet;
 
-import utilita.*;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import utilita.FreeMarker;
+import utilita.Intermedio;
+import utilita.Gestione;
 
 /**
  *
  * @author leo
  */
 public class Inserimento_libro extends HttpServlet {
-    private int id_opera;
-    private int pagina;
-    private String path;
-    private Part p;
-    private long size;
-    
-    protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception{
-        Random random = new Random();
-        Map<String,Object> data= new HashMap<String,Object>();
-        
-        id_opera = Integer.parseInt(request.getParameter("id_opera"));
-    	pagina = Integer.parseInt(request.getParameter("pagina"));
-        this.path = "" + id_opera + pagina + random.nextInt(1000);
-        
-        if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
-            //we could also get the other form fields as parts. however, getParameter works in this case, and it is easier to use!
-            this.p = request.getPart("photo");
-            //getPArt returns null if the part does not exist
-            if (p != null) {
-                String name = p.getSubmittedFileName(); //filename should be sanitized
-                String contentType = p.getContentType();
-                size = p.getSize();
-                if (size > 0 && name != null && !name.isEmpty()) {
-                    //File target = new File(getServletContext().getRealPath("") + File.separatorChar + "uploads" + File.separatorChar + name);
-                    //safer: getRealPath may not work in all contexts/configurations
-                    File target = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + name);
-                    //doo NOT call the write method. Paths passed to this method are relative to the (temp) location indicated in the multipartconfig!
-                    Files.copy(p.getInputStream(), target.toPath(), StandardCopyOption.REPLACE_EXISTING); //nio utility. Otherwise, use a buffer and copy from inputstream to fileoutputstream
-                    
-                    int k=insert_image(request,response);
-                    if(k>0){
-                        FreeMarker.process("index_registrazione.html", data, response, getServletContext());
-                    }
-                    else{
-                        FreeMarker.process("login_err.html", data, response, getServletContext());
-                    }
-                }
-            }
-        }    
-    }
-    protected int insert_image(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, Exception{
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    private String utente;
+    private String titolo;
+    private String autore;
+    private String editore;
+    private String isbn;
+    private String descrizione;
+    private int anno;
+    private String lingua;
+    private int download;
+    private String link_download;
+    private int buy;
+    private String link_buy;
+        protected int insert_data(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, Exception{
         int k=0;
-        try{
+                try{
             Intermedio.connect();    
             Map<String,Object> data= new HashMap<String,Object>();
-            data.put("id_opera",this.id_opera);
-            data.put("id_testo",this.id_opera);
-            data.put("pagina",this.pagina);
-            data.put("localfile",this.path);   
-            data.put("type", "jpg");
-            data.put("size",this.size); 
-            k=Intermedio.insertRecord1("immagine",data,response);
+            data.put("titolo",this.titolo);
+            data.put("autore",this.autore);
+            data.put("editore",this.editore);
+            data.put("isbn",this.isbn);
+            data.put("descrizione",this.descrizione);
+            data.put("lingua",this.lingua);
+            data.put("link_download",this.link_download);
+            data.put("link_buy",this.link_buy);
+            data.put("anno_pub",this.anno);
+            data.put("download",this.download);
+            data.put("buy",this.buy);
+                             PrintWriter out = response.getWriter();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Email o password errati " + this.titolo + "');");
+            out.println("</script>");
+            k=Intermedio.insertRecord1("libro",data,response);
         }
+
         catch(SQLException ex){
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
@@ -89,36 +78,78 @@ public class Inserimento_libro extends HttpServlet {
         }
         return k;
     }
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, Exception {
+        Map<String,Object> data= new HashMap<String,Object>();
+        response.setContentType("text/html;charset=UTF-8");
+        int k =0;
+        utente=Gestione.getEmail(request);
+        titolo = request.getParameter("titolo");
+        autore= request.getParameter("autore");
+        editore= request.getParameter("editore");
+        isbn= request.getParameter("isbn");
+        descrizione= request.getParameter("descrizione");
+        lingua= request.getParameter("lingua");
+        link_download= request.getParameter("link_download");
+        link_buy= request.getParameter("link_buy");
+        anno = Integer.parseInt(request.getParameter("anno"));
+    	download = Integer.parseInt(request.getParameter("download"));
+       	buy = Integer.parseInt(request.getParameter("buy"));
+        if(Gestione.session_check(request)){
+            k=insert_data(request,response);
+        }
+        else{
+            FreeMarker.process("index.html", data, response, getServletContext());
+        }
+        
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             try {
                 processRequest(request, response);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Inserimento_libro.class.getName()).log(Level.SEVERE, null, ex);
             }
-
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             try {
                 processRequest(request, response);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Inserimento_libro.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-    
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }
-
-
-

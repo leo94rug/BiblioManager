@@ -1,28 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package servlet;
 
-
 import utilita.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-public class Logout extends HttpServlet{
-        
-    private void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception{
-        Map<String,Object> data= new HashMap<String,Object>();    
-        Gestione.invalida(request);
-                    data.put("sessione", 0);
+/**
+ *
+ * @author leo
+ */
+public class change_insert extends HttpServlet {
+    
+    protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception{
+        Map<String,Object> data= new HashMap<String,Object>();
 
-            FreeMarker.process("index.jsp", data, response, getServletContext());
-    }
+                        FreeMarker.process("prova_up.jsp", data, response, getServletContext());
+                    
 
-     @Override
+                }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             try {
@@ -50,5 +65,8 @@ public class Logout extends HttpServlet{
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-
+    
 }
+
+
+

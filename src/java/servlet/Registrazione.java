@@ -16,19 +16,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.*;
 
 public class Registrazione extends HttpServlet{
-	public String email;
-	public String password;
-	public String tipo;
+	private String email;
+	private String pwd;
+	private String tipo;
+        private String nome;
+        private String cognome;
+        private String indirizzo;
+        private String professione;
+        
         
     protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception{
     	Map<String,Object> data= new HashMap<String,Object>();
         this.email = request.getParameter("email");
-    	this.password = request.getParameter("password");
+    	this.pwd = request.getParameter("pwd");
+    	this.tipo = "1";
+    	this.nome = request.getParameter("nome");
+    	this.cognome = request.getParameter("cognome");
+    	this.indirizzo = request.getParameter("indirizzo");
+    	this.professione = request.getParameter("professione");
+
         PrintWriter out = response.getWriter();
     	if(!Gestione.session_check(request)){
             if(registra_utente(request,response)){
                 Gestione.attiva_sessione(request,tipo);
-                FreeMarker.process("index_registrazione.html", data, response, getServletContext());
+                data.put("sessione", 1);
+                FreeMarker.process("index.jsp", data, response, getServletContext());
             }
             else{   
             out.println("<script type=\"text/javascript\">");
@@ -52,11 +64,14 @@ public class Registrazione extends HttpServlet{
         if(controllo_utente_esiste(request,response)){
             Map<String,Object> data= new HashMap<String,Object>();
             data.put("email",this.email);
-            data.put("password",this.password);
-            data.put("id_gruppo",1);      
- 
+            data.put("pwd",this.pwd);
+            data.put("tipo",Integer.parseInt(this.tipo));      
+            data.put("nome",this.nome);
+            data.put("cognome",this.cognome);
+            data.put("indirizzo",this.indirizzo);
+            data.put("professione",this.professione);
 
-           int k=Intermedio.insertRecord1("utente",data,response);
+        int k=Intermedio.insertRecord1("utente",data,response);
             if(k>0){
                 return true;
             }
@@ -83,8 +98,8 @@ public class Registrazione extends HttpServlet{
     try {     
         Intermedio.connect();
         ResultSet rs=Intermedio.selectRecord("utente","email='" + this.email + "'");
-        if(rs.next()){           
-            if(rs.getString(3).equals(this.email)){
+        if(rs.next()){         
+            if(rs.getString(2).equals(this.email)){
                 return false;
             }
         }

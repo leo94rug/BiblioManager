@@ -29,7 +29,8 @@ public class Login extends HttpServlet{
     	if(!Gestione.session_check(request)){
             if(controllo_utente(request,response)){
                 Gestione.attiva_sessione(request,tipo);
-                FreeMarker.process("index_utente_ad.html", data, response, getServletContext());
+                            data.put("sessione", 1);
+                FreeMarker.process("index.jsp", data, response, getServletContext());
             }
             else{
                              PrintWriter out = response.getWriter();
@@ -56,8 +57,8 @@ public class Login extends HttpServlet{
         Intermedio.connect();
         ResultSet rs=Intermedio.selectRecord("utente","email='" + this.email + "'");
         rs.next();           
-        if(rs.getString(3).equals(this.email)){
-            this.tipo = rs.getObject(4).toString();
+        if(rs.getString(2).equals(this.email)){
+            this.tipo = rs.getObject(7).toString();
             return true;
         }
         else{

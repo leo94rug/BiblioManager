@@ -33,6 +33,12 @@ public class Gestione extends HttpServlet{
             session.setAttribute("tipo", tipo);    	
         }
     }
+    public static String getEmail(HttpServletRequest request){        
+        return session.getAttribute("email").toString();
+    }
+    public static String getType(HttpServletRequest request){
+        return session.getAttribute("tipo").toString();        
+    }
     public static void invalida(HttpServletRequest request){
         session.invalidate();
     }

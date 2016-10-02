@@ -120,6 +120,7 @@ public class Intermedio {
             attr = e.getKey();
             value = e.getValue();
             System.out.println(value);
+
                             query1=query1 + attr + ", ";
             if(value instanceof Integer){
                 query2 = query2 + value + ", ";
@@ -127,13 +128,23 @@ public class Intermedio {
             else{
                 value = value.toString().replace("\'", "\\'");
                 query2=query2+"'" + value + "', ";
+
             }
         }
         query1 = query1.substring(0, query1.length() - 2);
         query2 = query2.substring(0, query2.length() - 2);
+                    out.println("<script type=\"text/javascript\">");
+            out.println("alert('Email " + query1 +  " ');");
+            out.println("</script>");
+                        out.println("<script type=\"text/javascript\">");
+            out.println("alert('pippo " + query2 +  " ');");
+            out.println("</script>");
         String query = "INSERT INTO " + table + " (" + query1 + ") VALUES (" + query2 + ")";
-                   // out.println(query);
-
+        Statement s1;
+        
+        s1 = Intermedio.db.createStatement();
+        int c=s1.executeUpdate(query); 
+        s1.close();
         return Intermedio.updateQuery(query);
     }
     public static int insertRecord(String table, Map<String, Object> data) throws SQLException{
