@@ -125,7 +125,7 @@ public class Insert_book extends HttpServlet {
                 String pluto = getServletContext().getContextPath();
                 String paperino = getServletContext().getInitParameter("uploads.directory");
                 if (size > 0 && name != null && !name.isEmpty()) {
-                    File target = new File(getServletContext().getContextPath() + File.separatorChar + "web" + File.separatorChar + "cover" + File.separatorChar + path + ".jpg");
+                    File target = new File(paperino + File.separatorChar + path);
                     //safer: getRealPath may not work in all contexts/configurations
                     //File target = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + name);
                     //doo NOT call the write method. Paths passed to this method are relative to the (temp) location indicated in the multipartconfig!
