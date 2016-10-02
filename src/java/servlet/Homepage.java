@@ -23,10 +23,10 @@ public class Homepage extends HttpServlet{
     protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         Map<String,Object> data= new HashMap<String,Object>();
         if(Gestione.session_check(request)){
-            data.put("sessione", 1);
+            data.put("sessione", true);
         }
         else{
-            data.put("sessione", 0);
+            data.put("sessione", false);
         }
         FreeMarker.process("index.jsp", data, response, getServletContext());
 

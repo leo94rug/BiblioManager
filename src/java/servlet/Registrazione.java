@@ -71,7 +71,7 @@ public class Registrazione extends HttpServlet{
             data.put("indirizzo",this.indirizzo);
             data.put("professione",this.professione);
 
-        int k=Intermedio.insertRecord1("utente",data,response);
+        int k=Intermedio.insertRecord1("utente",data);
             if(k>0){
                 return true;
             }

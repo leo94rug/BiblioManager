@@ -20,6 +20,7 @@ text-align: center;
 
 .destra{
       width: 40%;
+      margin-left: 15%;
 }
 
 .imagine{
@@ -28,4 +29,38 @@ text-align: center;
 
 .fot{
     margin-bottom: 5%;
+}
+
+#pp{
+    height: 20%;
+    width:20%;
+}
+
+.sopra{
+    margin-top: 15%;
+}
+
+#myImg{
+    width: 80%;
+}
+
+
+.myFile {
+  position: relative;
+  overflow: hidden;
+}
+.myFile input[type="file"] {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  font-size: 100px;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+}
+
+.upload{
+    margin-top:12%;
+    width: 70%;
 }

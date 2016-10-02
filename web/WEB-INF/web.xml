@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <servlet>
-        <servlet-name>Homepage</servlet-name>
-        <servlet-class>servlet.Homepage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>servlet.Inserimento_libro</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Inserimento_copertina</servlet-name>
-        <servlet-class>servlet.Inserimento_copertina</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Inserimento</servlet-name>
-        <servlet-class>servlet.Inserimento_libro</servlet-class>
-    </servlet>
+
+
+
     <servlet>
         <servlet-name>change_registrazione</servlet-name>
         <servlet-class>servlet.change_registrazione</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>change_registrazione</servlet-name>
+        <url-pattern>/change_registrazione</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Insert_book</servlet-name>
+        <servlet-class>servlet.Insert_book</servlet-class>
+                <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+             <file-size-threshold>1048576</file-size-threshold>  
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Insert_book</servlet-name>
+        <url-pattern>/Insert_book</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Homepage</servlet-name>
+        <servlet-class>servlet.Homepage</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>Homepage</servlet-name>
         <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>Inserimento_libro</servlet-name>
-        <servlet-class>servlet.ins</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Inserimento_libro</servlet-name>
-        <url-pattern>/insert</url-pattern>
-    </servlet-mapping>
+    
     <servlet>
         <servlet-name>change_insert</servlet-name>
         <servlet-class>servlet.change_insert</servlet-class>
@@ -40,6 +43,7 @@
         <servlet-name>change_insert</servlet-name>
         <url-pattern>/ch_insert</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>servlet.Login</servlet-class>
@@ -48,6 +52,7 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>Registrazione</servlet-name>
         <servlet-class>servlet.Registrazione</servlet-class>
@@ -56,24 +61,6 @@
         <servlet-name>Registrazione</servlet-name>
         <url-pattern>/registrazione</url-pattern>
     </servlet-mapping>
-    <!--
-    <servlet>
-        <servlet-name>Upload</servlet-name>
-        <servlet-class>servl.Upload</servlet-class>
-        <multipart-config>
-            <location>/tmp</location> temporary files location (DEF: "") 
-            <max-file-size>20848820</max-file-size>
-            max size of accepted uploadd (DEF: unlimited!)
-            <max-request-size>418018841</max-request-size>
-             max size of multipart requests (may contain more files or data) (DEF: ulimited!) 
-             <file-size-threshold>1048576</file-size-threshold> max size of files to hold in memory (without writing to temporary disk file) (DEF: 0) 
-        </multipart-config>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Upload</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
-    -->
     <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>servl.Logout</servlet-class>
@@ -82,18 +69,21 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+   <!-- <servlet-mapping>
         <servlet-name>Inserimento_copertina</servlet-name>
         <url-pattern>/cover</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Inserimento</servlet-name>
-        <url-pattern>/inserimento</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>change_registrazione</servlet-name>
-        <url-pattern>/change_registrazione</url-pattern>
-    </servlet-mapping>
+        <servlet>
+        <servlet-name>Inserimento_copertina</servlet-name>
+        <servlet-class>servlet.Inserimento_copertina</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+             <file-size-threshold>1048576</file-size-threshold>  
+        </multipart-config>
+    </servlet>
+    -->
+
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
@@ -102,6 +92,6 @@
     </welcome-file-list>
     <context-param>
         <param-name>uploads.directory</param-name>
-        <param-value>C:\Users\leo\Serverimmagini</param-value>
+        <param-value>C:\Users\leo\Documents\NetBeansProjects\BiblioManager\web\cover</param-value>
     </context-param>
 </web-app>

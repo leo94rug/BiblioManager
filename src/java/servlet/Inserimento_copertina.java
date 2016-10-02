@@ -32,6 +32,7 @@ public class Inserimento_copertina extends HttpServlet {
     private String path;
     private Part p;
     private long size;   
+    private String isbn;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,8 +47,8 @@ public class Inserimento_copertina extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Random random = new Random();
             Map<String,Object> data= new HashMap<String,Object>();
-
-        this.path = "" + random.nextInt(1000);
+            int cod = random.nextInt(1000);
+        this.path = "" + this.isbn + "_" + cod;
         
         if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
             this.p = request.getPart("photo");
@@ -56,18 +57,22 @@ public class Inserimento_copertina extends HttpServlet {
                 String contentType = p.getContentType();
                 size = p.getSize();
                 if (size > 0 && name != null && !name.isEmpty()) {
-                    //File target = new File(getServletContext().getRealPath("") + File.separatorChar + "uploads" + File.separatorChar + name);
+                    File target = new File(getServletContext().getRealPath("") + File.separatorChar + "cover" + File.separatorChar + name);
                     //safer: getRealPath may not work in all contexts/configurations
-                    File target = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + name);
+                    //File target = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + name);
                     //doo NOT call the write method. Paths passed to this method are relative to the (temp) location indicated in the multipartconfig!
                     Files.copy(p.getInputStream(), target.toPath(), StandardCopyOption.REPLACE_EXISTING); //nio utility. Otherwise, use a buffer and copy from inputstream to fileoutputstream
                     
                     int k=insert_data(request,response);
                     if(k>0){
-                        FreeMarker.process("index_registrazione.html", data, response, getServletContext());
+                                PrintWriter out = response.getWriter();
+        out.println("<script type=\"text/javascript\">");
+        out.println("alert('Inserito');");
+        out.println("</script>");
+                        FreeMarker.process("index.jsp", data, response, getServletContext());
                     }
                     else{
-                        FreeMarker.process("login_err.html", data, response, getServletContext());
+                        FreeMarker.process("index.jsp", data, response, getServletContext());
                     }
                 }
             }
@@ -78,14 +83,15 @@ public class Inserimento_copertina extends HttpServlet {
         try{
             Intermedio.connect();    
             Map<String,Object> data= new HashMap<String,Object>();
-
+            this.isbn=request.getParameter("isbn");
             data.put("type", "jpg");
             data.put("size",this.size); 
+            data.put("url_img",this.path);
                         PrintWriter q = response.getWriter();
             q.println("<script type=\"text/javascript\">");
             q.println("alert('utente  '" + "acca"  + "' ');");
             q.println("</script>");
-            k=Intermedio.insertRecord1("libro",data,response);
+            k=Intermedio.updateRecord("libro",data,"isbn=" + "'" + this.isbn + "'");
         }
 
         catch(SQLException ex){

@@ -110,12 +110,11 @@ public class Intermedio {
      * @return dati     prelevati
      * @throws java.sql.SQLException
      */
-        public static int insertRecord1(String table, Map<String, Object> data, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
+        public static int insertRecord1(String table, Map<String, Object> data) throws SQLException, IOException, ClassNotFoundException{
         String query1="";
         String query2="";
         Object value;
         String attr;
-                                             PrintWriter out = response.getWriter();
         for(Map.Entry<String,Object> e:data.entrySet()){
             attr = e.getKey();
             value = e.getValue();
@@ -133,18 +132,8 @@ public class Intermedio {
         }
         query1 = query1.substring(0, query1.length() - 2);
         query2 = query2.substring(0, query2.length() - 2);
-                    out.println("<script type=\"text/javascript\">");
-            out.println("alert('Email " + query1 +  " ');");
-            out.println("</script>");
-                        out.println("<script type=\"text/javascript\">");
-            out.println("alert('pippo " + query2 +  " ');");
-            out.println("</script>");
         String query = "INSERT INTO " + table + " (" + query1 + ") VALUES (" + query2 + ")";
-        Statement s1;
-        
-        s1 = Intermedio.db.createStatement();
-        int c=s1.executeUpdate(query); 
-        s1.close();
+
         return Intermedio.updateQuery(query);
     }
     public static int insertRecord(String table, Map<String, Object> data) throws SQLException{
@@ -192,7 +181,7 @@ public class Intermedio {
             }else{
                 query = query + attr + " = " + value + ", ";
             }
-            
+
             
         }
         query = query.substring(0, query.length()-2) + " WHERE " + condition;

@@ -6,7 +6,7 @@
    -->
 <html>
    <head>
-      <title>Registrazione</title>
+      <title>Inserimeno libro</title>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -50,66 +50,93 @@
          </nav>
       </header>
       <!-- Menu -->
-      <#include "menu_log.html">
+      <#include "menu_log.jsp">
       <!-- Main -->
       <div id="main">
          <!-- Post -->
          <article class="post">
          <header>
             <div class="title">
-               <h2><a href="#">Sono un nuovo utente</a></h2>
+               <h2><a href="#">Nuovo Libro </a></h2>
             </div>
          </header>
          <div class="centra fot">
             <label>
-               <h2>Inserisci i tuoi dati personali</h2>
+               <h2>Inserisci i dati del libro</h2>
             </label>
          </div>
          <!-- Search -->
          <!-- Links -->
-         <form action="action_page.php">
+         <form action="Insert_book" method="post" id="inserimento" enctype="multipart/form-data" >
                 
                 <div class="row">
                     <div class="col-md-12 sinistra centra">
-                        <img class="imagine" src="images/user.png"></img>
-                        
-                        <ul class="actions vertical">
-                           <li><a href="#" class="button">Registrati</a></li>
-                        </ul>
+                    <img id="myImg" src="images/imgs.png" alt="your image" />
+
+                        <label class="myFile">
+                            <img class="upload" src="images/uploadd.png" alt="" />
+                            <input type="file" name="photo"/>
+                        </label>
+                    
+                    
+                    <ul class="actions pagination centra sopra">
+                        <li><input type="submit"  class="button big " value="Inserisci"></li>
+                    </ul>
+                    
+                    
+                    
+                    
                     </div>
                     <div class="col-md-12 destra centra">
                         
                         <div class="form-group fot">
-                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome">
+                            <input type="text" class="form-control" name="titolo" id="nome" placeholder="Titolo">
                         </div>
                         
                          <div class="form-group fot">
-                            <input type="text" class="form-control" name="cognome" id="cognome" placeholder="Cognome">
+                            <input type="text" class="form-control" name="autore" id="cognome" placeholder="Autore">
                         </div>
                         
                     
                         
                          <div class="form-group fot">
-                            <input type="text" class="form-control" name="residenza" id="residenza" placeholder="Indirizzo">
+                            <input type="text" class="form-control" name="editore"  placeholder="Editore">
+                        </div>
+                        
+                         <div class="form-group fot">
+                            <input type="text" class="form-control" name="isbn"  placeholder="ISBN">
                         </div>
                         
                         
                         
                          <div class="form-group fot">
-                            <input type="text" class="form-control" name="professione" id="professione" placeholder="Professione">
+                             <select name="lingua">
+                                <option value="italiano">Italiano</option>
+                                <option value="inglese">Inglese</option>
+                                
+                            </select>
                         </div>
                         
                         
                         
                           <div class="form-group fot">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                            <input type="text" class="form-control" name="anno"  placeholder="Anno Pubblicazione">
                         </div>
                         
                           <div class="form-group fot">                   
-                            <input type="password" class="form-control"  name="pwd" id="pwd" placeholder="Password">
+                            <input type="text" class="form-control"  name="link_download"  placeholder="Link Download">
                           </div>
                         
-                    
+                        
+                        <div class="form-group fot">                   
+                            <input type="password" class="form-control"  name="link_buy"  placeholder="Dove Comprarlo">
+                        </div>
+                        <ul>
+                                     </form>
+
+			<h2>Inserisci una Descrizione</h2>
+                        <textarea  rows="4" cols="50" form="inserimento" name="descrizione"></textarea>
+                        </ul>
                         
                     </div>
                    
@@ -121,7 +148,6 @@
             
                
             
-         </form>
          <!-- Sidebar -->
          <!-- Intro -->
          <!-- Mini Posts -->
@@ -135,5 +161,6 @@
       <script src="assets/js/bootstrap_min.js"></script>
       <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
       <script src="assets/js/main.js"></script>
+    
    </body>
 </html>
