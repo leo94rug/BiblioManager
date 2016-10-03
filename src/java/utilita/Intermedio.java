@@ -65,11 +65,37 @@ public class Intermedio {
      */
     public static ResultSet selectRecord(String table, String condition, String order) throws SQLException{
         // Generazione query
-        String query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order;
+        String query;
+        if(condition.equals("")){
+            query = "SELECT * FROM " + table + " ORDER BY " + order;
+        }
+        else{
+            query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order;
+        }
         // Esecuzione query
         return Intermedio.executeQuery(query);
     }
-    
+    /**
+     * Select record con condizione e ordinamento
+     * @param table         tabella da cui prelevare i dati
+     * @param condition     condizione per il filtro dei dati
+     * @param order         ordinamento dei dati
+     * @param colonna       colonna dei dati
+     * @return              dati prelevati
+     * @throws java.sql.SQLException
+     */
+    public static ResultSet selectRecordColumn(String table, String condition, String order, String colonna) throws SQLException{
+        // Generazione query
+        String query;
+        if(condition.equals("")){
+            query = "SELECT " + colonna + " FROM " + table + " ORDER BY " + order;
+        }
+        else{
+            query = "SELECT " + colonna + " FROM " + table + " WHERE " + condition + " ORDER BY " + order;
+        }
+        // Esecuzione query
+        return Intermedio.executeQuery(query);
+    }    
     /**
      * Select record con join tra due tabelle
      * @param table_1           nome della prima tabella

@@ -39,7 +39,7 @@ public class Registrazione extends HttpServlet{
     	if(!Gestione.session_check(request)){
             if(registra_utente(request,response)){
                 Gestione.attiva_sessione(request,tipo);
-                data.put("sessione", 1);
+                data.put("sessione", true);
                 FreeMarker.process("index.jsp", data, response, getServletContext());
             }
             else{   

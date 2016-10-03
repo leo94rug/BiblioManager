@@ -4,21 +4,21 @@
 	html5up.net | @n33co
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-                                <#include "head.jsp">
+                                <#include "components/head.jsp">
 
 				<!-- Header -->
 				
-                                <#include "header.jsp">
+                                <#include "components/header.jsp">
 				<!-- Menu -->
 				<#if ( sessione)>
 				<!-- Menu -->
-				<#include "menu_log.jsp">
+				<#include "components/menu_log.jsp">
 				<!-- Main -->
                                 <#else>
-                                <#include "menu_nol.jsp">
+                                <#include "components/menu_nol.jsp">
                                 </#if>
 				<!-- Main -->
 				
-                                <#include "bodyindex.jsp">
+                                <#include "pages/bodyindex.jsp">
 		<!-- Scripts -->
-                                <#include "footer.jsp">
+                                <#include "components/footer.jsp">

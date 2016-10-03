@@ -31,9 +31,14 @@ public class change_insert extends HttpServlet {
     
     protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception{
         Map<String,Object> data= new HashMap<String,Object>();
-
-                        FreeMarker.process("inserimento_libro.jsp", data, response, getServletContext());
-                    
+        if(Gestione.session_check(request)){
+            data.put("sessione",true); 
+            FreeMarker.process("inserimento_libro.jsp", data, response, getServletContext());
+        }
+        else{
+            data.put("sessione",false); 
+            FreeMarker.process("index.jsp", data, response, getServletContext());            
+        }
 
                 }
 

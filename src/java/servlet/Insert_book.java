@@ -121,11 +121,14 @@ public class Insert_book extends HttpServlet {
                 String name = p.getSubmittedFileName(); //filename should be sanitized
                 type = p.getContentType();
                 size = p.getSize();
+                if(type.equals("image/jpeg")){
+                    type="jpg";
+                }
                 String pippo = getServletContext().getRealPath("");
                 String pluto = getServletContext().getContextPath();
                 String paperino = getServletContext().getInitParameter("uploads.directory");
                 if (size > 0 && name != null && !name.isEmpty()) {
-                    File target = new File(paperino + File.separatorChar + path);
+                    File target = new File(paperino + File.separatorChar + path + "." + type);
                     //safer: getRealPath may not work in all contexts/configurations
                     //File target = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + name);
                     //doo NOT call the write method. Paths passed to this method are relative to the (temp) location indicated in the multipartconfig!
@@ -156,7 +159,7 @@ public class Insert_book extends HttpServlet {
                     data2.put("buy",this.buy);
                     data2.put("type", this.type);
                     data2.put("size",this.size); 
-                    data2.put("url_img",this.path);
+                    data2.put("url_img",path + "." + type );
                     data2.put("utente_fk", this.utente);
                     k=Intermedio.insertRecord1("libro",data2);
                     if(k>0){

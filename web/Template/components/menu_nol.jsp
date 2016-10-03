@@ -17,7 +17,7 @@
       <ul class="actions vertical">
          <li><input type="submit" value="Login" class="button big fit"></li>
       </ul>
-      <label>Non hai un account <a href="registrazione">Registrati ora !!!</a></label>
+      <label>Non hai un account <a href="change_registrazione">Registrati ora !!!</a></label>
    </form>
    <!-- Actions -->
 </section>

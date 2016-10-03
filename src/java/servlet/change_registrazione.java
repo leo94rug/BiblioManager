@@ -34,9 +34,8 @@ public class change_registrazione extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Map<String,Object> data= new HashMap<String,Object>();
-
-                        FreeMarker.process("registrazione.jsp", data, response, getServletContext());
-                    
+        data.put("sessione", false);
+        FreeMarker.process("registrazione.jsp", data, response, getServletContext());           
         }
     
 
