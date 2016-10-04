@@ -5,8 +5,13 @@
         <servlet-class>servlet.change_registrazione</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>Detail_book</servlet-name>
         <servlet-class>servlet.Detail_book</servlet-class>
+=======
+        <servlet-name>Book_detail</servlet-name>
+        <servlet-class>servlet.Book_detail</servlet-class>
+>>>>>>> origin/master
     </servlet>
     <servlet-mapping>
         <servlet-name>change_registrazione</servlet-name>
@@ -59,15 +64,20 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>servl.Logout</servlet-class>
+        <servlet-class>servlet.Logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>Detail_book</servlet-name>
         <url-pattern>/dettaglio</url-pattern>
+=======
+        <servlet-name>Book_detail</servlet-name>
+        <url-pattern>/Book_detail</url-pattern>
+>>>>>>> origin/master
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

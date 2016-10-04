@@ -20,25 +20,35 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
+import static utilita.Intermedio.detail_book;
 
 /**
  *
- * @author leo
+ * @author 
  */
-public class Homepage extends HttpServlet{
+public class Book_detail extends HttpServlet{
  
+   
 protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
+        log("cuuuuuuuu");
         Map<String,Object> data= new HashMap<String,Object>();
-        List<Book> book= new ArrayList();
-        book=Books.libri_data_pub();
-        data.put("book",book);
+        String isbn = request.getParameter("isbn");
+        log(isbn);
+        Book g = null;
+        g = new Book(Intermedio.detail_book("libro","", isbn));
+        if (g == null) {
+            log("OOOOOOOOOOOOOOOOOOOOOO");
+        }
+        else log(new Book(detail_book("book","", isbn)).toString());
+        log(g.toString()+"******************************");
+        data.put("book",g);
         if(Gestione.session_check(request)){
             data.put("sessione", true);
         }
         else{
             data.put("sessione", false);
         }
-        FreeMarker.process("index.jsp", data, response, getServletContext());
+        FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
 
     }
         @Override
@@ -47,9 +57,9 @@ protected void processRequest (HttpServletRequest request, HttpServletResponse r
         try {
             processRequest(request,response);
         } catch (SQLException ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Book_detail.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Book_detail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -59,9 +69,9 @@ protected void processRequest (HttpServletRequest request, HttpServletResponse r
         try {
             processRequest(request,response);
         } catch (SQLException ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Book_detail.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Book_detail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
