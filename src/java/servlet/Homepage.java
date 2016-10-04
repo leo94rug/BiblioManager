@@ -26,13 +26,8 @@ import model.*;
  * @author leo
  */
 public class Homepage extends HttpServlet{
-<<<<<<< HEAD
  
 protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
-=======
-
-    protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
->>>>>>> origin/master
         Map<String,Object> data= new HashMap<String,Object>();
         List<Book> book= new ArrayList();
         book=Book_list.libri_data_pub();
