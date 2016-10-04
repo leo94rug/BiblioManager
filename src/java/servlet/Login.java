@@ -7,13 +7,16 @@ import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.*;
+import model.*;
 
 public class Login extends HttpServlet{
 	public String email;
@@ -30,10 +33,17 @@ public class Login extends HttpServlet{
             if(controllo_utente(request,response)){
                 Gestione.attiva_sessione(request,tipo);
                             data.put("sessione", true);
+                            
+                List < Book > book = new ArrayList();
+                book = Book_list.libri_data_pub();
+                data.put("book", book);
                 FreeMarker.process("index.jsp", data, response, getServletContext());
             }
             else{
-                             PrintWriter out = response.getWriter();
+                List<Book> book = new ArrayList();
+                book = Book_list.libri_data_pub();
+                data.put("book", book);
+                PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Email o password errati');");
             out.println("</script>");

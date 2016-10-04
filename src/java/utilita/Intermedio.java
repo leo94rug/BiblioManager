@@ -7,6 +7,7 @@
 package utilita;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.rmi.server.LogStream.log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -71,6 +72,22 @@ public class Intermedio {
         }
         else{
             query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order;
+        }
+        // Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
+    
+    
+    
+  public static ResultSet detail_book(String table, String condition, String isbn) throws SQLException{
+        // Generazione query
+    
+        String query;
+        if(condition.equals("")){
+            query = "SELECT * FROM " + table + " WHERE isbn=" + "'"+ isbn +"'";
+        }
+        else{
+            query = "SELECT * FROM " + table + " WHERE " + condition + isbn;
         }
         // Esecuzione query
         return Intermedio.executeQuery(query);
