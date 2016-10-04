@@ -34,7 +34,7 @@ public class Login extends HttpServlet {
                 Gestione.attiva_sessione(request, tipo);
                 data.put("sessione", true);
                 List < Book > book = new ArrayList();
-                book = Book_list.libri_data_pub();
+                book = Books.libri_data_pub();
                 data.put("book", book);
                 FreeMarker.process("index.jsp", data, response, getServletContext());
             } else {

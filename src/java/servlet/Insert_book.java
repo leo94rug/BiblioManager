@@ -124,6 +124,9 @@ public class Insert_book extends HttpServlet {
                 if(type.equals("image/jpeg")){
                     type="jpg";
                 }
+                if(type.equals("image/png")){
+                    type="png";
+                }
                 String pippo = getServletContext().getRealPath("");
                 String pluto = getServletContext().getContextPath();
                 String paperino = getServletContext().getInitParameter("uploads.directory");

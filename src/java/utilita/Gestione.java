@@ -13,35 +13,41 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.*;
 
-public class Gestione extends HttpServlet{
+public class Gestione extends HttpServlet {
+
     static HttpSession session;
-    public static boolean session_check (HttpServletRequest request){
-    	session = request.getSession(true);
-    	if(session.isNew()){
-    	    invalida(request);
-    		return false;
-    	}
-    	else{
-    		return true;
-    	}
-    }
-    public static void attiva_sessione(HttpServletRequest request,String tipo){
+
+    public static boolean session_check(HttpServletRequest request) {
         session = request.getSession(true);
-    	if(session.isNew()){
-            String email=request.getParameter("email");
-            session.setAttribute("email", email);
-            session.setAttribute("tipo", tipo);    	
+        if (session.isNew()) {
+            invalida(request);
+            return false;
+        } else {
+            return true;
         }
     }
-    public static String getEmail(HttpServletRequest request){        
+
+    public static void attiva_sessione(HttpServletRequest request, String tipo) {
+        session = request.getSession(true);
+        if (session.isNew()) {
+            String email = request.getParameter("email");
+            session.setAttribute("email", email);
+            session.setAttribute("tipo", tipo);
+        }
+    }
+
+    public static String getEmail(HttpServletRequest request) {
         return session.getAttribute("email").toString();
     }
-    public static String getType(HttpServletRequest request){
-        return session.getAttribute("tipo").toString();        
+
+    public static String getType(HttpServletRequest request) {
+        return session.getAttribute("tipo").toString();
     }
-    public static void invalida(HttpServletRequest request){
+
+    public static void invalida(HttpServletRequest request) {
         session.invalidate();
     }
+
     public static int checkNumeric(String s) throws NumberFormatException {
         //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
         //convert the string to a number, ensuring its validity

@@ -5,6 +5,6 @@
 <!-- Menu -->
 <#include "components/menu_log.jsp">
 <!-- Main -->
-<#include "pages/bodyinserimento_libro.jsp">
+<#include "pages/bodypubblicazione.jsp">
 <!-- Scripts -->
 <#include "components/footer.jsp">

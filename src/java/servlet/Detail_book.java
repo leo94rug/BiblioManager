@@ -12,33 +12,31 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
 
 /**
  *
- * @author leo
+ * @author 
  */
-public class Homepage extends HttpServlet{
-
-    protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
+public class Detail_book extends HttpServlet{
+ 
+   
+protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
         Map<String,Object> data= new HashMap<String,Object>();
-        List<Book> book= new ArrayList();
-        book=Books.libri_data_pub();
+        String isbn = request.getParameter("isbn");
+        Book book = Books.detail_book(isbn);
         data.put("book",book);
+        
         if(Gestione.session_check(request)){
             data.put("sessione", true);
         }
         else{
             data.put("sessione", false);
         }
-        FreeMarker.process("index.jsp", data, response, getServletContext());
+        FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
 
     }
         @Override
@@ -47,9 +45,9 @@ public class Homepage extends HttpServlet{
         try {
             processRequest(request,response);
         } catch (SQLException ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -59,9 +57,9 @@ public class Homepage extends HttpServlet{
         try {
             processRequest(request,response);
         } catch (SQLException ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

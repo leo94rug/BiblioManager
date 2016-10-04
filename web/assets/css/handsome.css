@@ -64,3 +64,11 @@ text-align: center;
     margin-top:12%;
     width: 70%;
 }
+
+.format{
+   max-height: 450px;
+}
+
+.dim{
+    max-height: 700px;
+}
