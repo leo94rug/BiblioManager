@@ -1,27 +1,19 @@
 <div id="main">
 
     <!-- Post -->
-    <#if (book??)>
-    <#list book as libro>
+    <#if (books??)>
+    <#list books as libro>
     <article class="post">
         <header>
             <div class="title">
-<<<<<<< HEAD
                 <h2><a href="dettaglio?isbn=${libro.isbn}">${libro.titolo}</a></h2>
-=======
-                <h2><a href="Book_detail?isbn=${libro.isbn}">${libro.titolo}</a></h2>
->>>>>>> origin/master
             </div>
             <div class="meta">
                 <time class="published" datetime="2015-11-01">${libro.data_ins}</time>
                 <a href="#" class="author"><span class="name">${libro.autore}</span><img src="images/j.jpg" alt="" /></a>
             </div>
         </header>
-<<<<<<< HEAD
         <a href="#" class="image featured"><img class="format" src="${libro.url_img}" alt="" /></a>
-=======
-        <a href="#" class="image featured"><img class="format" src="cover/${libro.url_img}" alt="" /></a>
->>>>>>> origin/master
         <p>${libro.descrizione}</p>
         <footer>
             <ul class="actions">

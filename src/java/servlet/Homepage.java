@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlet;
+import collection.Books;
 import utilita.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,12 +27,12 @@ import model.*;
  * @author leo
  */
 public class Homepage extends HttpServlet{
- 
-protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
+
+    protected void processRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception{
         Map<String,Object> data= new HashMap<String,Object>();
-        List<Book> book= new ArrayList();
-        book=Books.libri_data_pub();
-        data.put("book",book);
+        List<Book> books= new ArrayList();
+        books=Books.libri_data_pub();
+        data.put("books",books);
         if(Gestione.session_check(request)){
             data.put("sessione", true);
         }

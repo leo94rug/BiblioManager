@@ -26,7 +26,6 @@
        <a href="#"><h2>Pagina Personale</h2></a>
        <a href="#"><img class="fot" id="pp" src="images/home.png"></a>
        <a href="#"><h2>Homepage</h2></a>
-       
    </section>
    <!-- Actions -->
 </section>

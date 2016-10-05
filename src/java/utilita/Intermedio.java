@@ -8,7 +8,6 @@ package utilita;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.rmi.server.LogStream.log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -80,26 +79,7 @@ public class Intermedio {
         // Esecuzione query
         return Intermedio.executeQuery(query);
     }
-<<<<<<< HEAD
 
-=======
-    
-    
-    
-  public static ResultSet detail_book(String table, String condition, String isbn) throws SQLException{
-        // Generazione query
-    
-        String query;
-        if(condition.equals("")){
-            query = "SELECT * FROM " + table + " WHERE isbn=" + "'"+ isbn +"'";
-        }
-        else{
-            query = "SELECT * FROM " + table + " WHERE " + condition + isbn;
-        }
-        // Esecuzione query
-        return Intermedio.executeQuery(query);
-    }
->>>>>>> origin/master
     /**
      * Select record con condizione e ordinamento
      *
@@ -134,7 +114,13 @@ public class Intermedio {
      */
     public static ResultSet selectJoin(String table_1, String table_2, String join_condition, String where_condition) throws SQLException {
         // Generazione query
-        String query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition;
+        String query;
+        if (where_condition.equals("")) {
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition;
+        } else {
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition;
+        }
+
         // Esecuzione query
         return Intermedio.executeQuery(query);
     }
@@ -152,8 +138,13 @@ public class Intermedio {
      */
     public static ResultSet selectJoin(String table_1, String table_2, String join_condition, String where_condition, String order) throws SQLException {
         // Generazione query
-        String query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + "ORDER BY" + order;
-        // Esecuzione query
+        String query;
+        if (where_condition.equals("")) {
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order;
+        } else {
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order;
+        }
+// Esecuzione query
         return Intermedio.executeQuery(query);
     }
 
@@ -173,7 +164,6 @@ public class Intermedio {
         for (Map.Entry<String, Object> e : data.entrySet()) {
             attr = e.getKey();
             value = e.getValue();
-            System.out.println(value);
 
             query1 = query1 + attr + ", ";
             if (value instanceof Integer) {

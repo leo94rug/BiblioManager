@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlet;
+import collection.Books;
 import utilita.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,9 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
+import collection.*;
 
 /**
  *
@@ -29,6 +33,9 @@ protected void processRequest (HttpServletRequest request, HttpServletResponse r
         String isbn = request.getParameter("isbn");
         Book book = Books.detail_book(isbn);
         data.put("book",book);
+        List<Comment> comments= new ArrayList();
+        comments=Comments.commenti_data_pub(isbn);
+        data.put("comments",comments);
         
         if(Gestione.session_check(request)){
             data.put("sessione", true);

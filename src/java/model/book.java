@@ -41,7 +41,6 @@ public class Book {
     }
 
     public Book(ResultSet rs) throws SQLException {
-<<<<<<< HEAD
         this.isbn = rs.getString("isbn");
         this.titolo = rs.getString("titolo");
         this.autore = rs.getString("autore");
@@ -53,19 +52,6 @@ public class Book {
         this.anno_pub = rs.getInt("anno_pub");
         this.lingua = rs.getString("lingua");
         this.ultima_mod = rs.getDate("ultima_mod");
-=======
-        
-        this.isbn = rs.getString("isbn");
-        this.titolo =rs.getString ("titolo");
-        this.autore = rs.getString("autore");
-        this.editore =rs.getString("editore");
-        this.descrizione =rs.getString("descrizione");
-        this.url_img = rs.getString("url_img");
-        this.utente_fk =rs.getString("utente_fk");
-        this.anno_pub = rs.getInt("anno_pub");
-        this.lingua = rs.getString("lingua");
-        this.ultima_mod =rs.getDate("ultima_mod");
->>>>>>> origin/master
         this.buy = rs.getInt("buy");
         this.link_buy = rs.getString("link_buy");
         this.link_download = rs.getString("link_download");
@@ -73,18 +59,13 @@ public class Book {
         this.type = rs.getString("type");
         this.data_ins = rs.getDate("data_ins");
         if (type.equals("image/jpeg")) {
-<<<<<<< HEAD
             type = "jpg";
         }
         if (type.equals("image/png")) {
             type = "png";
         }
-=======
-                type = "jpg";
-            }
->>>>>>> origin/master
     }
-    
+
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
