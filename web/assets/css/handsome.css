@@ -9,18 +9,18 @@ and open the template in the editor.
 */
 
 .centra{
-text-align: center;    
+    text-align: center;    
 }
 
 
 .sinistra{
     width: 40%;
-    
+
 }
 
 .destra{
-      width: 40%;
-      margin-left: 15%;
+    width: 40%;
+    margin-left: 15%;
 }
 
 .imagine{
@@ -46,18 +46,18 @@ text-align: center;
 
 
 .myFile {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 .myFile input[type="file"] {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  opacity: 0;
-  font-size: 100px;
-  filter: alpha(opacity=0);
-  cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    font-size: 100px;
+    filter: alpha(opacity=0);
+    cursor: pointer;
 }
 
 .upload{
@@ -66,9 +66,20 @@ text-align: center;
 }
 
 .format{
-   max-height: 450px;
+    max-height: 450px;
 }
 
 .dim{
     max-height: 700px;
+}
+
+.insmag{
+    margin-top: 4%;
+    width: 45%;
+}
+
+
+#regt{
+    width: 100%;
+    font-size: 90%;
 }

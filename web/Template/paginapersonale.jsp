@@ -2,7 +2,6 @@
 <#include "components/head.jsp">
 <!-- Header -->
 <#include "components/header.jsp">
-<!-- Menu -->
 <#if ( sessione)>
 <!-- Menu -->
 <#include "components/menu_log.jsp">
@@ -11,6 +10,6 @@
 <#include "components/menu_nol.jsp">
 </#if>
 <!-- Main -->
-<#include "pages/bodypubblicazione.jsp">
+<#include "pages/bodypaginapers.jsp">
 <!-- Scripts -->
 <#include "components/footer.jsp">

@@ -8,6 +8,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import utilita.Gestione;
 
 /**
  *
@@ -15,6 +16,12 @@ import java.util.Date;
  */
 public class Book {
 
+    private int tipo;
+    private String nome;
+    private String cognome;
+    private String email;
+    private String indirizzo;
+    private String professione;
     private String isbn;
     private String titolo;
     private String autore;
@@ -31,16 +38,11 @@ public class Book {
     private Double size;
     public String type;
     private Date data_ins;
+    private int numero_commenti;
 
-    public void setData_ins(Date data_ins) {
-        this.data_ins = data_ins;
-    }
-
-    public Date getData_ins() {
-        return data_ins;
-    }
 
     public Book(ResultSet rs) throws SQLException {
+
         this.isbn = rs.getString("isbn");
         this.titolo = rs.getString("titolo");
         this.autore = rs.getString("autore");
@@ -64,6 +66,31 @@ public class Book {
         if (type.equals("image/png")) {
             type = "png";
         }
+        this.numero_commenti = Gestione.commenti_numero(isbn);
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public void setProfessione(String professione) {
+        this.professione = professione;
     }
 
     public void setIsbn(String isbn) {
@@ -126,6 +153,38 @@ public class Book {
         this.type = type;
     }
 
+    public void setData_ins(Date data_ins) {
+        this.data_ins = data_ins;
+    }
+
+    public void setNumero_commenti(int numero_commenti) {
+        this.numero_commenti = numero_commenti;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public String getProfessione() {
+        return professione;
+    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -185,4 +244,13 @@ public class Book {
     public String getType() {
         return type;
     }
+
+    public Date getData_ins() {
+        return data_ins;
+    }
+
+    public int getNumero_commenti() {
+        return numero_commenti;
+    }
+    
 }

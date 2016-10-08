@@ -10,31 +10,32 @@
             </div>
             <div class="meta">
                 <time class="published" datetime="2015-11-01">${libro.data_ins}</time>
-                <a href="#" class="author"><span class="name">${libro.autore}</span><img src="images/j.jpg" alt="" /></a>
+                <a href="profilo?email=${libro.utente_fk}" class="author"><span class="name">${libro.autore}</span><img src="images/j.jpg" alt="" /></a>
             </div>
         </header>
-        <a href="#" class="image featured"><img class="format" src="${libro.url_img}" alt="" /></a>
+        <a href="dettaglio?isbn=${libro.isbn}" class="image featured"><img class="format" src="${libro.url_img}" alt="" /></a>
         <p>${libro.descrizione}</p>
         <footer>
             <ul class="actions">
-                <li><a href="pubblicazione.html" class="button big">Visualizza libro</a></li>
+                <li><a href="dettaglio?isbn=${libro.isbn}" class="button big">Visualizza libro</a></li>
             </ul>
             <ul class="stats">
-                <li><a href="#">General</a></li>
-                <li><a href="#" class="icon fa-heart">28</a></li>
-                <li><a href="#" class="icon fa-comment">128</a></li>
+                <li><a href="dettaglio?isbn=${libro.isbn}">General</a></li>
+                <li><a href="dettaglio?isbn=${libro.isbn}" class="icon fa-comment">128</a></li>
             </ul>
         </footer>
     </article>
-</#list>
-<#else>
-<p> NON C'è NIENTE </p>
-</#if>
+    </#list>
+    <#else>
+    <p> NON C'è NIENTE </p>
+    </#if>
     <!-- Post -->
 
     <ul class="actions pagination">
-        <li><a href="" class="disabled button big previous">Previous Page</a></li>
-        <li><a href="#" class="button big next">Next Page</a></li>
+        <#if pagina gt 0>
+        <li><a href="homepage?page=${pagina}&mov=indietro" class=" button big previous">Previous Page</a></li>
+        </#if>
+        <li><a href="homepage?page=${pagina}&mov=avanti" class="button big next">Next Page</a></li>
     </ul>
 
 </div>

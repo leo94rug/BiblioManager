@@ -1,6 +1,5 @@
 package servlet;
 
-import collection.*;
 import utilita.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,115 +21,79 @@ public class Registrazione extends HttpServlet {
 
     private String email;
     private String pwd;
-    private String tipo;
+    private int tipo;
     private String nome;
     private String cognome;
     private String indirizzo;
     private String professione;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
+        List<Book> books = new ArrayList();
+        data.put("pagina", 0);
+        books = Gestione.libri_data_pub();
+        data.put("book", books);
         this.email = request.getParameter("email");
         this.pwd = request.getParameter("pwd");
-        this.tipo = "1";
+        this.tipo = 1;
         this.nome = request.getParameter("nome");
         this.cognome = request.getParameter("cognome");
         this.indirizzo = request.getParameter("indirizzo");
         this.professione = request.getParameter("professione");
-        List<Book> books = new ArrayList();
-        books = Books.libri_data_pub();
-        data.put("book", books);
         PrintWriter out = response.getWriter();
         if (!Gestione.session_check(request)) {
-            if (registra_utente(request, response)) {
-                Gestione.attiva_sessione(request, tipo);
+            if (Gestione.controllo_esistenza("utente", "email", email)) {
+                Map<String, Object> utente = new HashMap<String, Object>();
+                utente.put("email", this.email);
+                utente.put("pwd", this.pwd);
+                utente.put("tipo", this.tipo);
+                utente.put("nome", this.nome);
+                utente.put("cognome", this.cognome);
+                utente.put("indirizzo", this.indirizzo);
+                utente.put("professione", this.professione);
+                Intermedio.insertRecord1("utente", utente);
+                Gestione.attiva_sessione(request, 1);
                 data.put("sessione", true);
                 FreeMarker.process("index.jsp", data, response, getServletContext());
-            } else {
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Errore nella registrazione');");
-                out.println("</script>");
-                Gestione.invalida(request);
-                data.put("sessione", false);
-
-                FreeMarker.process("index.jsp", data, response, getServletContext());
-
-            }
-        } else {
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Sei già loggato');");
-            out.println("</script>");
-            data.put("sessione", false);
-
-            FreeMarker.process("index.jsp", data, response, getServletContext());
-        }
-    }
-
-    public boolean registra_utente(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException, Exception {
-        try {
-            Intermedio.connect();
-            if (controllo_utente_esiste(request, response)) {
-                Map<String, Object> data = new HashMap<String, Object>();
-                data.put("email", this.email);
-                data.put("pwd", this.pwd);
-                data.put("tipo", Integer.parseInt(this.tipo));
-                data.put("nome", this.nome);
-                data.put("cognome", this.cognome);
-                data.put("indirizzo", this.indirizzo);
-                data.put("professione", this.professione);
-
-                int k = Intermedio.insertRecord1("utente", data);
-                if (k > 0) {
-                    return true;
-                }
             } else {
                 PrintWriter q = response.getWriter();
                 q.println("<script type=\"text/javascript\">");
                 q.println("alert('utente gia esistente');");
                 q.println("</script>");
+                Gestione.invalida(request);
+                data.put("sessione", false);
+                FreeMarker.process("index.jsp", data, response, getServletContext());
             }
-        } catch (SQLException ex) {
-            PrintWriter out = response.getWriter();
+        } else {
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('ERRORE database (reg_ut), cod:" + ex.getMessage() + "');");
+            out.println("alert('Sei già loggato');");
             out.println("</script>");
-        } finally {
-            out.close();
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         }
-        return false;
-    }
-
-    protected boolean controllo_utente_esiste(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException, Exception {
-        try {
-            Intermedio.connect();
-            ResultSet rs = Intermedio.selectRecord("utente", "email='" + this.email + "'");
-            if (rs.next()) {
-                if (rs.getString(2).equals(this.email)) {
-                    return false;
-                }
-            }
-        } catch (SQLException ex) {
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('ERRORE database(contr_ut), cod:" + ex.getMessage() + "');");
-            out.println("</script>");
-        } finally {
-            out.close();
-        }
-        return true;
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> data = new HashMap<String, Object>();
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         }
 
     }
@@ -138,14 +101,24 @@ public class Registrazione extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Map<String, Object> data = new HashMap<String, Object>();
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Gestione.invalida(request);
+            data.put("sessione", false);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         }
     }
 

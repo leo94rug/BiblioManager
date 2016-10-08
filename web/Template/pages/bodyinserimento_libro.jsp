@@ -85,19 +85,7 @@
                         <textarea  rows="4" cols="50" form="inserimento" name="descrizione"></textarea>
                         </ul>
                         
-                    </div>
-                   
-                   
-                    
+                    </div>  
                 </div>
 
-            
-            
-               
-            
-         <!-- Sidebar -->
-         <!-- Intro -->
-         <!-- Mini Posts -->
-         <!-- Posts List -->
-         <!-- About -->
       </div>

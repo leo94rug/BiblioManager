@@ -1,7 +1,5 @@
 package servlet;
 
-
-import collection.Books;
 import utilita.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,93 +18,91 @@ import javax.servlet.http.*;
 import model.Book;
 
 public class Login extends HttpServlet {
+
     public String email;
     public String password;
-    public String tipo;
+    public int tipo;
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception {
-        Map < String, Object > data = new HashMap < String, Object > ();
-
-        this.email = request.getParameter("email");
-        this.password = request.getParameter("password");
+        Map< String, Object> data = new HashMap< String, Object>();
+        ResultSet rs;
+                data.put("pagina",0);
+        PrintWriter out = response.getWriter();
+        List< Book> book = new ArrayList();
+        book = Gestione.libri_data_pub();
+        data.put("books", book);
+        email = request.getParameter("email");
+        password = request.getParameter("password");
 
         if (!Gestione.session_check(request)) {
-            if (controllo_utente(request, response)) {
+            rs = Intermedio.selectRecord("utente", "email='" + email + "'");
+            if (rs.next()) {
+                tipo = rs.getInt("tipo");
                 Gestione.attiva_sessione(request, tipo);
                 data.put("sessione", true);
-                List < Book > book = new ArrayList();
-                book = Books.libri_data_pub();
-                data.put("books", book);
                 FreeMarker.process("index.jsp", data, response, getServletContext());
             } else {
-                PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Email o password errati');");
                 out.println("</script>");
                 Gestione.invalida(request);
-                FreeMarker.process("index.html", data, response, getServletContext());
-                out.println("Email o password errati");
+                FreeMarker.process("index.jsp", data, response, getServletContext());
             }
         } else {
-            PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Sei già loggato');");
             out.println("</script>");
-            FreeMarker.process("index.html", data, response, getServletContext());
-            out.println("Sei già loggato");
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
         }
     }
 
-    protected boolean controllo_utente(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException, Exception {
-        try {
-            Intermedio.connect();
-            ResultSet rs = Intermedio.selectRecord("utente", "email='" + this.email + "'");
-            rs.next();
-            if (rs.getString("email").equals(this.email)) {
-                this.tipo = rs.getObject(7).toString();
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('ERRORE database, cod:" + ex.getMessage() + "');");
-            out.println("</script>");
-        } finally {
-            out.close();
-        }
-        return false;
-    }
-
-
-    @
-    Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+        Map< String, Object> data = new HashMap< String, Object>();
+
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
+            data.put("sessione", false);
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            data.put("sessione", false);
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            data.put("sessione", false);
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    @
-    Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+        Map< String, Object> data = new HashMap< String, Object>();
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
+            data.put("sessione", false);
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            data.put("sessione", false);
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            data.put("sessione", false);
+            Gestione.invalida(request);
+            FreeMarker.process("index.jsp", data, response, getServletContext());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -20,18 +20,33 @@ public class Comment {
     private int valutazione;
     private String user_fk;
     private String libro_fk;
+    private boolean approvato;
+
 
     public Comment(ResultSet rs) throws SQLException {
         this.commento = rs.getString("commento");
         this.id = rs.getInt("id");
         this.data_ins = rs.getDate("data_ins");
         this.valutazione = rs.getInt("valutazione");
+        int app = rs.getInt("approvato");
+        if(app==1){
+            approvato=true;
+        }else{
+            approvato=false;
+        }
         this.user_fk = rs.getString("user_fk");
         this.libro_fk = rs.getString("libro_fk");
+    }
+    public boolean getApprovato() {
+        return approvato;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setApprovato(boolean approvato) {
+        this.approvato = approvato;
     }
 
     public String getCommento() {

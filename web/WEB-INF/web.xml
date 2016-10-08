@@ -12,6 +12,18 @@
         <servlet-name>Insert_comment</servlet-name>
         <servlet-class>servlet.Insert_comment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Profilo</servlet-name>
+        <servlet-class>servlet.Profilo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Approva_comm</servlet-name>
+        <servlet-class>servlet.Approva_comm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Promotion</servlet-name>
+        <servlet-class>servlet.Promotion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>change_registrazione</servlet-name>
         <url-pattern>/change_registrazione</url-pattern>
@@ -63,7 +75,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>servl.Logout</servlet-class>
+        <servlet-class>servlet.Logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
@@ -76,6 +88,18 @@
     <servlet-mapping>
         <servlet-name>Insert_comment</servlet-name>
         <url-pattern>/commento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Profilo</servlet-name>
+        <url-pattern>/profilo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Approva_comm</servlet-name>
+        <url-pattern>/approva</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Promotion</servlet-name>
+        <url-pattern>/promozione</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -33,7 +33,7 @@
             </div>
             <div class="meta">
                 <time class="published" datetime="2015-11-01">${book.data_ins}</time>
-                <a href="#" class="author"><span class="name">${book.autore}</span><img src="images/j.jpg" alt="" /></a>
+                <a href="profilo?email=${book.utente_fk}" class="author"><span class="name">${book.autore}</span><img src="images/j.jpg" alt="" /></a>
             </div>
         </header>
         <a href="#" class="image featured"><img class="dim" src="${book.url_img}" alt="" /></a>
@@ -49,34 +49,18 @@
                         <time class="published" datetime="2015-10-15"><h4>${commenti.commento}</h4>${commenti.data_ins}</time>
                     </header>
                     <a href="#" class="image"><img src="images/recensione.png" alt="" /></a>
+                    <#if (commenti.approvato)>
+                    <#else>
+                    <a href="approva?id=${commenti.id}&isbn=${commenti.libro_fk}">Approva</a>
+                    </#if>
                 </article>
             </li>
             </#list>
             <#else>
-            <p> NON C'è NIENTE </p>
+            <p>non</p>
             </#if>
 
 
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Matteo Ricci</a></h3>
-                        <time class="published" datetime="2015-10-15"><h4>Il libro mi piace tantissimo</h4>October 15, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/recensione.png" alt="" /></a>
-                </article>
-            </li>
-
-
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Matteo Ricci</a></h3>
-                        <time class="published" datetime="2015-10-15"><h4>Il libro mi piace tantissimo</h4>October 15, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/recensione.png" alt="" /></a>
-                </article>
-            </li>
         </ul>
         <ul>
             <h2>Inserisci un commento</h2>

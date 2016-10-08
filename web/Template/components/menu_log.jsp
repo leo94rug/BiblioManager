@@ -22,10 +22,10 @@
    </section>
    <!-- Links -->
    <section class="centra">
-       <a href="#"><img class="fot" id="pp" src="images/pp.png"></a>
-       <a href="#"><h2>Pagina Personale</h2></a>
-       <a href="#"><img class="fot" id="pp" src="images/home.png"></a>
-       <a href="#"><h2>Homepage</h2></a>
+       <a href="profilo?email="><img class="fot" id="pp" src="images/pp.png"></a>
+       <a href="profilo?email="><h2>Pagina Personale</h2></a>
+       <a href="homepage"><img class="fot" id="pp" src="images/home.png"></a>
+       <a href="homepage"><h2>Homepage</h2></a>
    </section>
    <!-- Actions -->
 </section>

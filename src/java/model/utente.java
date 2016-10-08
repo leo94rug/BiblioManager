@@ -5,36 +5,49 @@
  */
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
- * @author leo
+ * @author 
  */
-public class utente {
-    private int id;
+public class Utente {
+
     private int tipo;
     private String nome;
     private String cognome;
     private String email;
+    private String indirizzo;
+    private String professione;
 
-    public utente(int id, int tipo, String nome, String cognome, String email) {
-        this.id = id;
-        this.tipo = tipo;
-        this.nome = nome;
-        this.cognome = cognome;
+    public Utente(ResultSet rs) throws SQLException {
+        this.tipo = rs.getInt("tipo");
+        this.nome = rs.getString("nome");
+        this.cognome = rs.getString("cognome");
+        this.email = rs.getString("email");
+        this.indirizzo = rs.getString("indirizzo");
+        this.professione=rs.getString("professione");
+    }
+
+    public Utente(String email) {
         this.email = email;
     }
 
-    public utente(String email) {
-        this.email = email;
-    }
-    
-
-    public int getId() {
-        return id;
+    public void setProfessione(String professione) {
+        this.professione = professione;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getProfessione() {
+        return professione;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
     }
 
     public int getTipo() {
@@ -68,6 +81,5 @@ public class utente {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
+
 }

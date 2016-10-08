@@ -58,6 +58,21 @@ public class Intermedio {
         // Esecuzione query
         return Intermedio.executeQuery(query);
     }
+    public static ResultSet selectRecordp(String table, String condition, String order,int page) throws SQLException, IOException {
+        // Generazione query
+        int start = page*5;
+        int end = start+5;
+                String starts = start + "";
+                String ends = end + "";
+                String query;
+        if (condition.equals("")) {
+        query = "SELECT * FROM " + table + " ORDER BY " + order + " DESC " + " LIMIT " + starts + "," + ends;
+        } else {
+        query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC " + " LIMIT " + starts + "," + ends;
+        }
+        // Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
 
     /**
      * Select record con condizione e ordinamento
@@ -72,9 +87,9 @@ public class Intermedio {
         // Generazione query
         String query;
         if (condition.equals("")) {
-            query = "SELECT * FROM " + table + " ORDER BY " + order;
+            query = "SELECT * FROM " + table + " ORDER BY " + order + " DESC";
         } else {
-            query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order;
+            query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC";
         }
         // Esecuzione query
         return Intermedio.executeQuery(query);
@@ -140,14 +155,37 @@ public class Intermedio {
         // Generazione query
         String query;
         if (where_condition.equals("")) {
-            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order;
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order + " DESC";
         } else {
-            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order;
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order + " DESC";
         }
 // Esecuzione query
         return Intermedio.executeQuery(query);
     }
 
+    /**
+     *
+     * @param table_1
+     * @param table_2
+     * @param table_3
+     * @param join_condition_1
+     * @param join_condition_2
+     * @param where_condition
+     * @param order
+     * @return
+     * @throws SQLException
+     */
+    public static ResultSet selectJoin(String table_1, String table_2,String table_3, String join_condition_1,String join_condition_2, String where_condition, String order) throws SQLException {
+        // Generazione query
+        String query;
+        if (where_condition.equals("")) {
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " ORDER BY " + order + " DESC";
+        } else {
+            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " WHERE " + where_condition + " ORDER BY " + order + " DESC";
+        }
+// Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
     /**
      * Insert record
      *
@@ -260,9 +298,14 @@ public class Intermedio {
      * @throws java.sql.SQLException
      */
     public static int countRecord(String table, String condition) throws SQLException {
-
         // Generazione query
-        String query = "SELECT COUNT(*) FROM " + table + " WHERE " + condition;
+        String query;
+        if (condition.equals("")) {
+        query = "SELECT COUNT(*) FROM " + table;
+        } else {
+        query = "SELECT COUNT(*) FROM " + table + " WHERE " + condition;
+        }
+        // Generazione query
         // Esecuzione query
         ResultSet record = Intermedio.executeQuery(query);
         record.next();

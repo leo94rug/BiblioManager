@@ -6,7 +6,7 @@
       </form>
    </section>
    <!-- Links -->
-   <form action="login">
+   <form action="login" method="post">
       <div class="container">
          <label><b>Username</b></label>
          <input type="text" placeholder="Enter Username" name="email" required>

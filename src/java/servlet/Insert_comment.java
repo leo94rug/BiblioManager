@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Book;
-import collection.Books;
-import collection.Comments;
 import model.Comment;
 import utilita.FreeMarker;
 import utilita.Gestione;
@@ -49,15 +47,17 @@ public class Insert_comment extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
+        int tipo = Gestione.getType(request);
+        data.put("admin", tipo);
         libro_fk = request.getParameter("isbn");
 
         List<Comment> comments = new ArrayList();
-        comments = Comments.commenti_data_pub(libro_fk);
+        comments = Gestione.commenti_data_pub(libro_fk);
         data.put("comments", comments);
-        Book book = Books.detail_book(libro_fk);
+        Book book = Gestione.detail_book(libro_fk);
         data.put("book", book);
         List<Book> books = new ArrayList();
-        books = Books.libri_data_pub();
+        books = Gestione.libri_data_pub();
         data.put("books", books);
         response.setContentType("text/html;charset=UTF-8");
         if (Gestione.session_check(request)) {
@@ -80,7 +80,7 @@ public class Insert_comment extends HttpServlet {
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Commento inserito!');");
                         out.println("</script>");
-                        comments = Comments.commenti_data_pub(libro_fk);
+                        comments = Gestione.commenti_data_pub(libro_fk);
                         data.put("comments", comments);
                         FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
 
