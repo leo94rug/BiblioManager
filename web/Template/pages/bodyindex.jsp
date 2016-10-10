@@ -32,10 +32,17 @@
     <!-- Post -->
 
     <ul class="actions pagination">
-        <#if pagina gt 0>
+        <#if pagina gt 1>
         <li><a href="homepage?page=${pagina}&mov=indietro" class=" button big previous">Previous Page</a></li>
         </#if>
+        <#if last??>
+        
+        <#if last >
         <li><a href="homepage?page=${pagina}&mov=avanti" class="button big next">Next Page</a></li>
+        <#else>
+        </#if>
+        <#else>
+        </#if>
     </ul>
 
 </div>

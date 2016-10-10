@@ -3,19 +3,15 @@ package servlet;
 import utilita.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.*;
-import model.Book;
 
 public class Login extends HttpServlet {
 
@@ -26,11 +22,8 @@ public class Login extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception {
         Map< String, Object> data = new HashMap< String, Object>();
         ResultSet rs;
-                data.put("pagina",0);
         PrintWriter out = response.getWriter();
-        List< Book> book = new ArrayList();
-        book = Gestione.libri_data_pub();
-        data.put("books", book);
+        data = Gestione.getPage(request, data);
         email = request.getParameter("email");
         password = request.getParameter("password");
 
@@ -61,8 +54,8 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map< String, Object> data = new HashMap< String, Object>();
-
         try {
+            data = Gestione.getPage(request, data);
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             data.put("sessione", false);
@@ -88,6 +81,7 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         Map< String, Object> data = new HashMap< String, Object>();
         try {
+            data = Gestione.getPage(request, data);
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             data.put("sessione", false);

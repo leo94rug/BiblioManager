@@ -6,7 +6,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -38,23 +37,23 @@ public class Promotion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-                String email;
-                        Map<String,Object> data= new HashMap<String,Object>();
-                        Map<String,Object> user= new HashMap<String,Object>();
-                        user.put("tipo", 2);
-         email= request.getParameter("email");
-        
+        String email;
+        Map<String, Object> data = new HashMap<String, Object>();
+        Map<String, Object> user = new HashMap<String, Object>();
+        user.put("tipo", 2);
+        email = request.getParameter("email");
+
         Utente utente = Gestione.utente(email);
         data.put("utente", utente);
         Intermedio.updateRecord("utente", user, "email=" + email);
-             /* @param table tabella in cui aggiornare i dati
+        /* @param table tabella in cui aggiornare i dati
      * @param data dati da inserire
      * @param condition condizione per il filtro dei dati
      * @return true se l'inserimento è andato a buon fine, false altrimenti
      * @throws java.sql.SQLException
-        */
-        
-                if (Gestione.session_check(request)) {
+         */
+
+        if (Gestione.session_check(request)) {
             data.put("sessione", true);
         } else {
             data.put("sessione", false);

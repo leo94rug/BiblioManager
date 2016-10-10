@@ -14,7 +14,7 @@
          </div>
          <!-- Search -->
          <!-- Links -->
-         <form action="Insert_book" method="post" id="inserimento" enctype="multipart/form-data" >
+         <form action="inserimento" method="post" id="inserimento" enctype="multipart/form-data" >
                 
                 <div class="row">
                     <div class="col-md-12 sinistra centra">

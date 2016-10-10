@@ -39,7 +39,7 @@ public class Profilo extends HttpServlet {
 
         if (Gestione.session_check(request)) {
             data.put("sessione", true);
-            if (Gestione.getType(request) == 2) {
+            if (Gestione.getType(request)==2) {
                 data.put("admin", true);
 
             }

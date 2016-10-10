@@ -35,7 +35,7 @@ public class Detail_book extends HttpServlet {
         data.put("admin", false);
         if (Gestione.session_check(request)) {
             data.put("sessione", true);
-            if (Gestione.getType(request) == 2) {
+            if (Gestione.getType(request)==2) {
                 comments = Gestione.commenti_data_pub_admin(isbn);
                 data.put("admin", true);
             }
@@ -56,6 +56,7 @@ public class Detail_book extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (Exception ex) {
             Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,6 +69,7 @@ public class Detail_book extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (Exception ex) {
             Logger.getLogger(Detail_book.class.getName()).log(Level.SEVERE, null, ex);
         }

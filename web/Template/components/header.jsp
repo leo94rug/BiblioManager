@@ -6,7 +6,7 @@
             <ul>
                 <#if ( sessione)>
                 <li><a href="homepage">Homepage</a></li>
-                <li><a href="ch_insert">Inserimento libro</a></li>
+                <li><a href="inserimento">Inserimento libro</a></li>
                 <li><a href="#menu">Cerca un libro</a></li>
                 <#else>
                 <li><a href="homepage">Homepage</a></li>

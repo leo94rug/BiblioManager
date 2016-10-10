@@ -27,7 +27,8 @@ public class Intermedio {
     protected static String url = "jdbc:mysql://localhost/bibliomanager";
     protected static String user = "root";
     protected static String psw = "";
-
+    
+    private static boolean isConnect=false;
     private static Connection db;
 
     /**
@@ -35,14 +36,12 @@ public class Intermedio {
      *
      * @throws Exception
      */
-    public static String annida(String par1, String val1, String par2, String val2) {
-        return par1 + "=" + "'" + val1 + "' && '" + par2 + "=" + "'" + val2 + "'";
-    }
 
     public static void connect() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             db = DriverManager.getConnection(url, user, psw);
+            isConnect=true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -50,25 +49,26 @@ public class Intermedio {
 
     public static void close() throws SQLException {
         Intermedio.db.close();
+        isConnect=false;
     }
-
+    public static boolean isConnect(){
+        return isConnect;
+    }
     public static ResultSet selectRecord(String table, String condition) throws SQLException, IOException {
         // Generazione query
         String query = "SELECT * FROM " + table + " WHERE " + condition;
         // Esecuzione query
         return Intermedio.executeQuery(query);
     }
-    public static ResultSet selectRecordp(String table, String condition, String order,int page) throws SQLException, IOException {
+    public static ResultSet selectRecordp(String table, String condition, String order,int page,int numeroDiPagine) throws SQLException, IOException {
         // Generazione query
-        int start = page*5;
-        int end = start+5;
+        int start = page*numeroDiPagine;
                 String starts = start + "";
-                String ends = end + "";
                 String query;
         if (condition.equals("")) {
-        query = "SELECT * FROM " + table + " ORDER BY " + order + " DESC " + " LIMIT " + starts + "," + ends;
+        query = "SELECT * FROM " + table + " ORDER BY " + order + " DESC " + " LIMIT " + start + "," + numeroDiPagine;
         } else {
-        query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC " + " LIMIT " + starts + "," + ends;
+        query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC " + " LIMIT " + starts + "," + numeroDiPagine;
         }
         // Esecuzione query
         return Intermedio.executeQuery(query);
@@ -193,6 +193,8 @@ public class Intermedio {
      * @param data dati da inserire
      * @return dati prelevati
      * @throws java.sql.SQLException
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
     public static int insertRecord1(String table, Map<String, Object> data) throws SQLException, IOException, ClassNotFoundException {
         String query1 = "";

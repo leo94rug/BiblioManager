@@ -6,7 +6,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +55,7 @@ public class Approva_comm extends HttpServlet {
         data.put("admin", false);
         if (Gestione.session_check(request)) {
             data.put("sessione", true);
-            if (Gestione.getType(request) == 2) {
+            if (Gestione.getType(request)==2) {
                 comments = Gestione.commenti_data_pub_admin(isbn);
                 data.put("admin", true);
             }

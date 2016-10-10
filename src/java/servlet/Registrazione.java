@@ -3,19 +3,14 @@ package servlet;
 import utilita.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.*;
-import model.*;
 
 public class Registrazione extends HttpServlet {
 
@@ -27,12 +22,15 @@ public class Registrazione extends HttpServlet {
     private String indirizzo;
     private String professione;
 
+    protected void goToPage(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("sessione", false);
+        FreeMarker.process("registrazione.jsp", data, response, getServletContext());
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
-        List<Book> books = new ArrayList();
-        data.put("pagina", 0);
-        books = Gestione.libri_data_pub();
-        data.put("book", books);
+        data = Gestione.getPage(request, data);
         this.email = request.getParameter("email");
         this.pwd = request.getParameter("pwd");
         this.tipo = 1;
@@ -78,24 +76,13 @@ public class Registrazione extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> data = new HashMap<String, Object>();
         try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            Gestione.invalida(request);
-            data.put("sessione", false);
-            FreeMarker.process("index.jsp", data, response, getServletContext());
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            Gestione.invalida(request);
-            data.put("sessione", false);
-            FreeMarker.process("index.jsp", data, response, getServletContext());
+            goToPage(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
             Gestione.invalida(request);
             data.put("sessione", false);
             FreeMarker.process("index.jsp", data, response, getServletContext());
         }
-
     }
 
     @Override
@@ -105,17 +92,17 @@ public class Registrazione extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
             Gestione.invalida(request);
             data.put("sessione", false);
             FreeMarker.process("index.jsp", data, response, getServletContext());
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
             Gestione.invalida(request);
             data.put("sessione", false);
             FreeMarker.process("index.jsp", data, response, getServletContext());
         } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
             Gestione.invalida(request);
             data.put("sessione", false);
             FreeMarker.process("index.jsp", data, response, getServletContext());

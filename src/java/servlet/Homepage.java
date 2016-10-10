@@ -14,11 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.*;
 
 /**
  *
@@ -28,40 +25,15 @@ public class Homepage extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
-        List<Book> books = new ArrayList();
-        Intermedio.connect();
+        if (!Intermedio.isConnect()) {
+            Intermedio.connect();
+        }
         if (Gestione.session_check(request)) {
             data.put("sessione", true);
         } else {
             data.put("sessione", false);
         }
-        int end = Intermedio.countRecord("libro", "");
-
-        String mov = (String) request.getParameter("mov");
-        if (mov == null) {
-            mov = "null";
-        }
-        int op = end/5;
-        int page;
-        if ("null".equals(mov)) {
-            page = 0;
-        } else {
-            page = Integer.parseInt((String) request.getParameter("page"));
-            if ((page >= 0) && (page < (end / 5))) {
-                if (mov.equals("avanti")) {
-                    page++;
-                }
-                if (mov.equals("indietro")) {
-                    page--;
-                }
-
-            } 
-        }
-
-        books = Gestione.libri_data_pub(page);
-        data.put("books", books);
-        data.put("pagina", page);
-
+        data = Gestione.getPage(request, data);
         FreeMarker.process("index.jsp", data, response, getServletContext());
 
     }

@@ -39,7 +39,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Insert_book</servlet-name>
-        <url-pattern>/Insert_book</url-pattern>
+        <url-pattern>/inserimento</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>Homepage</servlet-name>

@@ -47,8 +47,7 @@ public class Insert_comment extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
-        int tipo = Gestione.getType(request);
-        data.put("admin", tipo);
+
         libro_fk = request.getParameter("isbn");
 
         List<Comment> comments = new ArrayList();
@@ -56,11 +55,11 @@ public class Insert_comment extends HttpServlet {
         data.put("comments", comments);
         Book book = Gestione.detail_book(libro_fk);
         data.put("book", book);
-        List<Book> books = new ArrayList();
-        books = Gestione.libri_data_pub();
-        data.put("books", books);
+        data = Gestione.getPage(request, data);
         response.setContentType("text/html;charset=UTF-8");
         if (Gestione.session_check(request)) {
+            int tipo =Gestione.getType(request);
+            data.put("admin", tipo);
             data.put("sessione", true);
             testo = request.getParameter("testo");
             email = Gestione.getEmail(request);
