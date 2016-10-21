@@ -1,183 +1,73 @@
+<!-- Main -->
 <div id="main">
-
-    <!-- Post -->
+    <form action="homepage" method="post">
+        <select name="order">
+            <option <#if order=0> selected </#if> value="0">Titolo</option>
+            <option <#if order=1> selected </#if> value="1">Autore</option>
+            <option <#if order=2> selected </#if> value="2">Anno</option>
+            <option <#if order=3> selected </#if> value="3">ISBN</option>
+            <option <#if order=4> selected </#if> value="4">Editore</option>
+            <option <#if order=5> selected </#if> value="5">Ultimi inserimenti</option>
+        </select>
+        <br><br>
+        <input type="submit">
+    </form>
+    <!-- Libro -->
     <#if (books??)>
     <#list books as libro>
     <article class="post">
         <header>
             <div class="title">
-                <h2><a href="dettaglio?isbn=${libro.isbn}">${libro.titolo}</a></h2>
+                <h2><a href="<#if (sessione)>dettaglio?isbn=${libro.isbn}<#else>#menu</#if>">${libro.titolo}</a></h2>
             </div>
             <div class="meta">
                 <time class="published" datetime="2015-11-01">${libro.data_ins}</time>
-                <a href="profilo?email=${libro.utente_fk}" class="author"><span class="name">${libro.autore}</span><img src="images/j.jpg" alt="" /></a>
+                <p>${libro.autore}</p>
             </div>
         </header>
-        <a href="dettaglio?isbn=${libro.isbn}" class="image featured"><img class="format" src="${libro.url_img}" alt="" /></a>
+        <a href="<#if (sessione)>dettaglio?isbn=${libro.isbn}<#else>#menu</#if>" class="image featured"><img class="format" src="${libro.url_img}" alt="" /></a>
         <p>${libro.descrizione}</p>
         <footer>
             <ul class="actions">
-                <li><a href="dettaglio?isbn=${libro.isbn}" class="button big">Visualizza libro</a></li>
+                <li><a href="<#if (sessione)>dettaglio?isbn=${libro.isbn}<#else>#menu</#if>" class="button big">Visualizza libro</a></li>
             </ul>
             <ul class="stats">
-                <li><a href="dettaglio?isbn=${libro.isbn}">General</a></li>
-                <li><a href="dettaglio?isbn=${libro.isbn}" class="icon fa-comment">128</a></li>
+                <li><a href="<#if (sessione)>profilo?email=${libro.utente_fk}<#else>#menu</#if>">${libro.nome} ${libro.cognome}</a></li>
+                <li><div class="icon fa-comment">${libro.numero_commenti}</div></li>
             </ul>
         </footer>
     </article>
     </#list>
-    <#else>
-    <p> NON C'è NIENTE </p>
     </#if>
-    <!-- Post -->
-
+    <!-- Avanti&Dientro -->
     <ul class="actions pagination">
         <#if pagina gt 1>
-        <li><a href="homepage?page=${pagina}&mov=indietro" class=" button big previous">Previous Page</a></li>
+        <li><a href="homepage?page=${pagina}&mov=indietro&order=${order}" class=" button big previous">Previous Page</a></li>
         </#if>
         <#if last??>
-        
         <#if last >
-        <li><a href="homepage?page=${pagina}&mov=avanti" class="button big next">Next Page</a></li>
+        <li><a href="homepage?page=${pagina}&mov=avanti&order=${order}" class="button big next">Next Page</a></li>
         <#else>
         </#if>
         <#else>
         </#if>
     </ul>
-
 </div>
-
 <!-- Sidebar -->
 <section id="sidebar">
-
     <!-- Intro -->
     <section id="intro">
-        <a href="#" class="logo"><img src="images/logh.png" alt="" /></a>
         <header>
             <h2>HANDSOME LIBRARY</h2>
             <p>Leggere un libro non Ã¨ uscire dal mondo, ma entrare nel mondo attraverso un altro ingresso.</p>
         </header>
     </section>
-
     <!-- Mini Posts -->
-    <section>
-        <div class="mini-posts">
-
-            <!-- Mini Post -->
-            <article class="mini-post">
-                <header>
-                    <h3><a href="#">Vitae sed condimentum</a></h3>
-                    <time class="published" datetime="2015-10-20">October 20, 2015</time>
-                    <a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-                </header>
-                <a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-            </article>
-
-            <!-- Mini Post -->
-            <article class="mini-post">
-                <header>
-                    <h3><a href="#">Rutrum neque accumsan</a></h3>
-                    <time class="published" datetime="2015-10-19">October 19, 2015</time>
-                    <a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-                </header>
-                <a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-            </article>
-
-            <!-- Mini Post -->
-            <article class="mini-post">
-                <header>
-                    <h3><a href="#">Odio congue mattis</a></h3>
-                    <time class="published" datetime="2015-10-18">October 18, 2015</time>
-                    <a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-                </header>
-                <a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
-            </article>
-
-            <!-- Mini Post -->
-            <article class="mini-post">
-                <header>
-                    <h3><a href="#">Enim nisl veroeros</a></h3>
-                    <time class="published" datetime="2015-10-17">October 17, 2015</time>
-                    <a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-                </header>
-                <a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-            </article>
-
-        </div>
-    </section>
-
-    <!-- Posts List -->
-    <section>
-        <ul class="posts">
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Lorem ipsum fermentum ut nisl vitae</a></h3>
-                        <time class="published" datetime="2015-10-20">October 20, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-                </article>
-            </li>
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Convallis maximus nisl mattis nunc id lorem</a></h3>
-                        <time class="published" datetime="2015-10-15">October 15, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-                </article>
-            </li>
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Euismod amet placerat vivamus porttitor</a></h3>
-                        <time class="published" datetime="2015-10-10">October 10, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic10.jpg" alt="" /></a>
-                </article>
-            </li>
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Magna enim accumsan tortor cursus ultricies</a></h3>
-                        <time class="published" datetime="2015-10-08">October 8, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic11.jpg" alt="" /></a>
-                </article>
-            </li>
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="#">Congue ullam corper lorem ipsum dolor</a></h3>
-                        <time class="published" datetime="2015-10-06">October 7, 2015</time>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic12.jpg" alt="" /></a>
-                </article>
-            </li>
-        </ul>
-    </section>
-
+    <#include "../components/last_modify.jsp">
+    <!-- Active user -->
+    <#include "../components/active_user.jsp">
     <!-- About -->
-    <section class="blurb">
-        <h2>About</h2>
-        <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
-        <ul class="actions">
-            <li><a href="#" class="button">Learn More</a></li>
-        </ul>
-    </section>
-
+    <#include "../components/about.jsp">
     <!-- Footer -->
-    <section id="footer">
-        <ul class="icons">
-            <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
-            <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
-        </ul>
-        <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
-    </section>
-
+    <#include "../components/footer.jsp">
 </section>
-
-</div>

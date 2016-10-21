@@ -15,9 +15,12 @@ public class Logout extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
+        if (!Intermedio.isConnect()) {
+            Intermedio.connect();
+        }
         Gestione.invalida(request);
-        data.put("sessione", false);
-        data = Gestione.getPage(request, data);
+        data = Controller.addTypeUser(request, data);
+        data = Controller.getPage(request, data, "");
         FreeMarker.process("index.jsp", data, response, getServletContext());
     }
 

@@ -8,6 +8,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import utilita.Controller;
 import utilita.Gestione;
 
 /**
@@ -33,28 +34,31 @@ public class Book {
     private String lingua;
     private Date ultima_mod;
     private int buy;
+    private int download;
     private String link_buy;
     private String link_download;
     private Double size;
     public String type;
     private Date data_ins;
     private int numero_commenti;
-
+    private int da_approvare;
 
     public Book(ResultSet rs) throws SQLException {
-
-        this.isbn = rs.getString("isbn");
-        this.titolo = rs.getString("titolo");
-        this.autore = rs.getString("autore");
-        this.editore = rs.getString("editore");
-        this.descrizione = rs.getString("descrizione");
+        this.nome = Gestione.stripSlash(rs.getString("nome"));
+        this.cognome = Gestione.stripSlash(rs.getString("cognome"));
+        this.isbn = Gestione.stripSlash(rs.getString("isbn"));
+        this.titolo = Gestione.stripSlash(rs.getString("titolo"));
+        this.autore = Gestione.stripSlash(rs.getString("autore"));
+        this.editore = Gestione.stripSlash(rs.getString("editore"));
+        this.descrizione = Gestione.stripSlash(rs.getString("descrizione"));
         this.url_img = rs.getString("url_img");
         this.url_img = "cover" + "\\" + url_img;
-        this.utente_fk = rs.getString("utente_fk");
+        this.utente_fk = Gestione.stripSlash(rs.getString("utente_fk"));
         this.anno_pub = rs.getInt("anno_pub");
-        this.lingua = rs.getString("lingua");
+        this.lingua = Gestione.stripSlash(rs.getString("lingua"));
         this.ultima_mod = rs.getDate("ultima_mod");
         this.buy = rs.getInt("buy");
+        this.download = rs.getInt("download");
         this.link_buy = rs.getString("link_buy");
         this.link_download = rs.getString("link_download");
         this.size = rs.getDouble("size");
@@ -66,7 +70,37 @@ public class Book {
         if (type.equals("image/png")) {
             type = "png";
         }
-        this.numero_commenti = Gestione.commenti_numero(isbn);
+        this.numero_commenti = Controller.commenti_numero(isbn);
+        this.da_approvare = Controller.num_appr(isbn);
+        if (this.buy == 0) {
+            this.link_buy = "";
+        }
+        else{
+            Gestione.stripSlash(link_buy);
+        }
+
+        if (this.download == 0) {
+            this.link_download = "";
+        }
+        else{
+            Gestione.stripSlash(link_download);
+        }
+    }
+
+    public void setDa_approvare(int da_approvare) {
+        this.da_approvare = da_approvare;
+    }
+
+    public int getDa_approvare() {
+        return da_approvare;
+    }
+
+    public void setDownload(int download) {
+        this.download = download;
+    }
+
+    public int getDownload() {
+        return download;
     }
 
     public void setTipo(int tipo) {
@@ -252,5 +286,5 @@ public class Book {
     public int getNumero_commenti() {
         return numero_commenti;
     }
-    
+
 }

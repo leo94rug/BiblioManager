@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>change_registrazione</servlet-name>
-        <servlet-class>servlet.change_registrazione</servlet-class>
+        <servlet-name>Modification</servlet-name>
+        <servlet-class>servlet.Modification</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
+    <servlet>
+        <servlet-name>profmod</servlet-name>
+        <servlet-class>servlet.profmod</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Modification</servlet-name>
+        <url-pattern>/modifica</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>Detail_book</servlet-name>
         <servlet-class>servlet.Detail_book</servlet-class>
@@ -24,10 +42,6 @@
         <servlet-name>Promotion</servlet-name>
         <servlet-class>servlet.Promotion</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>change_registrazione</servlet-name>
-        <url-pattern>/change_registrazione</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>Insert_book</servlet-name>
         <servlet-class>servlet.Insert_book</servlet-class>
@@ -50,12 +64,12 @@
         <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>change_insert</servlet-name>
-        <servlet-class>servlet.change_insert</servlet-class>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>servlet.Search</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>change_insert</servlet-name>
-        <url-pattern>/ch_insert</url-pattern>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/Search</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>Login</servlet-name>
@@ -68,6 +82,11 @@
     <servlet>
         <servlet-name>Registrazione</servlet-name>
         <servlet-class>servlet.Registrazione</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>Registrazione</servlet-name>
@@ -100,6 +119,10 @@
     <servlet-mapping>
         <servlet-name>Promotion</servlet-name>
         <url-pattern>/promozione</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>profmod</servlet-name>
+        <url-pattern>/profmod</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

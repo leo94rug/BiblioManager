@@ -1,8 +1,12 @@
 package servlet;
 
+import java.io.File;
 import utilita.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,13 +18,10 @@ import javax.servlet.http.*;
 
 public class Registrazione extends HttpServlet {
 
-    private String email;
-    private String pwd;
-    private int tipo;
-    private String nome;
-    private String cognome;
-    private String indirizzo;
-    private String professione;
+    private String path;
+    private String type;
+    private long size;
+    private Part p;
 
     protected void goToPage(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
@@ -30,46 +31,79 @@ public class Registrazione extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
-        data = Gestione.getPage(request, data);
-        this.email = request.getParameter("email");
-        this.pwd = request.getParameter("pwd");
-        this.tipo = 1;
-        this.nome = request.getParameter("nome");
-        this.cognome = request.getParameter("cognome");
-        this.indirizzo = request.getParameter("indirizzo");
-        this.professione = request.getParameter("professione");
+        Random random = new Random();
+        if (!Intermedio.isConnect()) {
+            Intermedio.connect();
+        }
+        data = Controller.getPage(request, data, "");
+
+        String email = Gestione.spaceTrim(request.getParameter("email"));
+        String pwd = Gestione.crypt(Gestione.spaceTrim(request.getParameter("pwd")));
+        int tipo = 1;
+        String nome = Gestione.spaceTrim(request.getParameter("nome"));
+        String cognome = Gestione.spaceTrim(request.getParameter("cognome"));
+        String indirizzo = Gestione.spaceTrim(request.getParameter("indirizzo"));
+        String professione = Gestione.spaceTrim(request.getParameter("professione"));
+        if (!(Gestione.isAlphanumeric(nome) && Gestione.isAlphanumeric(cognome) && Gestione.isAlphanumeric(professione))) {
+            throw new Exception();
+        }
+
+        if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
+            this.p = request.getPart("photo");
+            if (p != null && p.getSize() > 0) {
+                int cod = random.nextInt(1000);
+                this.path = "" + email + "_" + cod;
+
+                String name = p.getSubmittedFileName(); //filename should be sanitized
+                type = p.getContentType();
+                size = p.getSize();
+                if (type.equals("image/jpeg")) {
+                    type = "jpg";
+                }
+                if (type.equals("image/png")) {
+                    type = "png";
+                }
+                String upload = getServletContext().getInitParameter("uploads.directory");
+                if (size > 0 && name != null && !name.isEmpty()) {
+                    File target = new File(upload + File.separatorChar + path + ".dat");
+                    //safer: getRealPath may not work in all contexts/configurations
+                    //File target = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + name);
+                    //doo NOT call the write method. Paths passed to this method are relative to the (temp) location indicated in the multipartconfig!
+                    long copy = Files.copy(p.getInputStream(), target.toPath(), StandardCopyOption.REPLACE_EXISTING); //nio utility. Otherwise, use a buffer and copy from inputstream to fileoutputstream
+                }
+            } else {
+                this.path = "user";
+            }
+        }
         PrintWriter out = response.getWriter();
         if (!Gestione.session_check(request)) {
             if (Gestione.controllo_esistenza("utente", "email", email)) {
                 Map<String, Object> utente = new HashMap<String, Object>();
-                utente.put("email", this.email);
-                utente.put("pwd", this.pwd);
-                utente.put("tipo", this.tipo);
-                utente.put("nome", this.nome);
-                utente.put("cognome", this.cognome);
-                utente.put("indirizzo", this.indirizzo);
-                utente.put("professione", this.professione);
-                Intermedio.insertRecord1("utente", utente);
+                utente.put("email", email);
+                utente.put("pwd", pwd);
+                utente.put("tipo", tipo);
+                utente.put("nome", nome);
+                utente.put("cognome", cognome);
+                utente.put("indirizzo", indirizzo);
+                utente.put("professione", professione);
+                if (p != null && p.getSize() > 0) {
+                    utente.put("img_user", path + ".dat");
+                } else {
+                    utente.put("img_user", path + ".dat");
+                }
+                Intermedio.insertRecord("utente", utente);
                 Gestione.attiva_sessione(request, 1);
                 data.put("sessione", true);
-                FreeMarker.process("index.jsp", data, response, getServletContext());
             } else {
-                PrintWriter q = response.getWriter();
-                q.println("<script type=\"text/javascript\">");
-                q.println("alert('utente gia esistente');");
-                q.println("</script>");
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('utente gia esistente');");
+                out.println("</script>");
                 Gestione.invalida(request);
                 data.put("sessione", false);
-                FreeMarker.process("index.jsp", data, response, getServletContext());
             }
-        } else {
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Sei già loggato');");
-            out.println("</script>");
-            Gestione.invalida(request);
-            data.put("sessione", false);
-            FreeMarker.process("index.jsp", data, response, getServletContext());
         }
+        data = Controller.addTypeUser(request, data);
+        FreeMarker.process("index.jsp", data, response, getServletContext());
     }
 
     @Override

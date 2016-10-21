@@ -28,25 +28,17 @@ public class Detail_book extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
-        String isbn = request.getParameter("isbn");
-        Book book = Gestione.detail_book(isbn);
-        data.put("book", book);
-        List<Comment> comments = new ArrayList();
-        data.put("admin", false);
-        if (Gestione.session_check(request)) {
-            data.put("sessione", true);
-            if (Gestione.getType(request)==2) {
-                comments = Gestione.commenti_data_pub_admin(isbn);
-                data.put("admin", true);
-            }
-        } else {
-            data.put("sessione", false);
-            comments = Gestione.commenti_data_pub(isbn);
+        if (!Intermedio.isConnect()) {
+            Intermedio.connect();
         }
-        data.put("comments", comments);
-
-        FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
-
+        data = Controller.addTypeUser(request, data);
+        if (Gestione.session_check(request)) {
+            data = Controller.ottieniLibro(request, data);
+            FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
+        } else {
+            data = Controller.getPage(request, data, "");
+            FreeMarker.process("index.jsp", data, response, getServletContext());
+        }
     }
 
     @Override

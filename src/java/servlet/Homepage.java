@@ -28,14 +28,9 @@ public class Homepage extends HttpServlet {
         if (!Intermedio.isConnect()) {
             Intermedio.connect();
         }
-        if (Gestione.session_check(request)) {
-            data.put("sessione", true);
-        } else {
-            data.put("sessione", false);
-        }
-        data = Gestione.getPage(request, data);
+        data = Controller.addTypeUser(request, data);
+        data = Controller.getPage(request, data, "");
         FreeMarker.process("index.jsp", data, response, getServletContext());
-
     }
 
     @Override

@@ -27,8 +27,8 @@ public class Intermedio {
     protected static String url = "jdbc:mysql://localhost/bibliomanager";
     protected static String user = "root";
     protected static String psw = "";
-    
-    private static boolean isConnect=false;
+
+    private static boolean isConnect = false;
     private static Connection db;
 
     /**
@@ -36,12 +36,11 @@ public class Intermedio {
      *
      * @throws Exception
      */
-
     public static void connect() throws Exception {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             db = DriverManager.getConnection(url, user, psw);
-            isConnect=true;
+            isConnect = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -49,26 +48,29 @@ public class Intermedio {
 
     public static void close() throws SQLException {
         Intermedio.db.close();
-        isConnect=false;
+        isConnect = false;
     }
-    public static boolean isConnect(){
+
+    public static boolean isConnect() {
         return isConnect;
     }
+
+    /**
+     * Select record con condizione
+     *
+     * @param table tabella da cui prelevare i dati
+     * @param condition condizione per il filtro dei dati
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
     public static ResultSet selectRecord(String table, String condition) throws SQLException, IOException {
         // Generazione query
-        String query = "SELECT * FROM " + table + " WHERE " + condition;
-        // Esecuzione query
-        return Intermedio.executeQuery(query);
-    }
-    public static ResultSet selectRecordp(String table, String condition, String order,int page,int numeroDiPagine) throws SQLException, IOException {
-        // Generazione query
-        int start = page*numeroDiPagine;
-                String starts = start + "";
-                String query;
+        String query;
         if (condition.equals("")) {
-        query = "SELECT * FROM " + table + " ORDER BY " + order + " DESC " + " LIMIT " + start + "," + numeroDiPagine;
+            query = "SELECT * FROM " + table;
         } else {
-        query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC " + " LIMIT " + starts + "," + numeroDiPagine;
+            query = "SELECT * FROM " + table + " WHERE " + condition;
         }
         // Esecuzione query
         return Intermedio.executeQuery(query);
@@ -96,7 +98,7 @@ public class Intermedio {
     }
 
     /**
-     * Select record con condizione e ordinamento
+     * Select record con colonna, condizione e ordinamento
      *
      * @param table tabella da cui prelevare i dati
      * @param condition condizione per il filtro dei dati
@@ -105,13 +107,38 @@ public class Intermedio {
      * @return dati prelevati
      * @throws java.sql.SQLException
      */
-    public static ResultSet selectRecordColumn(String table, String condition, String order, String colonna) throws SQLException {
+    public static ResultSet selectRecord(String table, String colonna, String condition, String order) throws SQLException {
         // Generazione query
         String query;
         if (condition.equals("")) {
-            query = "SELECT " + colonna + " FROM " + table + " ORDER BY " + order;
+            query = "SELECT " + colonna + " FROM " + table + " ORDER BY " + order + " DESC";
         } else {
-            query = "SELECT " + colonna + " FROM " + table + " WHERE " + condition + " ORDER BY " + order;
+            query = "SELECT " + colonna + " FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC";
+        }
+        // Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
+
+    /**
+     * Select record con colonna, condizione, ordinamento e limite ai dati
+     *
+     * @param table tabella da cui prelevare i dati
+     * @param condition condizione per il filtro dei dati
+     * @param order ordinamento dei dati
+     * @param offset limite da cui estrarre i dati
+     * @param row_count numero di dati da estrarre
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
+    public static ResultSet selectRecord(String table, String condition, String order, int offset, int row_count) throws SQLException, IOException {
+        // Generazione query
+        int start = offset * row_count;
+        String query;
+        if (condition.equals("")) {
+            query = "SELECT * FROM " + table + " ORDER BY " + order + " DESC " + " LIMIT " + start + "," + row_count;
+        } else {
+            query = "SELECT * FROM " + table + " WHERE " + condition + " ORDER BY " + order + " DESC " + " LIMIT " + start + "," + row_count;
         }
         // Esecuzione query
         return Intermedio.executeQuery(query);
@@ -141,8 +168,9 @@ public class Intermedio {
     }
 
     /**
-     * Select record con join tra due tabelle e ordinamento
+     * Select record con join tra due tabelle con ordnamento
      *
+     * @param select colonne da prelevare
      * @param table_1 nome della prima tabella
      * @param table_2 nome della seconda tabella
      * @param join_condition condizione del join tra la tabelle
@@ -151,13 +179,84 @@ public class Intermedio {
      * @return dati prelevati
      * @throws java.sql.SQLException
      */
-    public static ResultSet selectJoin(String table_1, String table_2, String join_condition, String where_condition, String order) throws SQLException {
+    public static ResultSet selectJoin(String select, String table_1, String table_2, String join_condition, String where_condition, String order) throws SQLException {
         // Generazione query
         String query;
         if (where_condition.equals("")) {
-            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order + " DESC";
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order + " DESC";
         } else {
-            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order + " DESC";
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order + " DESC";
+        }
+
+        // Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
+
+    public static ResultSet selectJoin(String select, String table_1, String table_2, String join_condition, String where_condition, String order, int limite) throws SQLException {
+        // Generazione query
+        String query;
+        if (where_condition.equals("")) {
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order + " DESC" + "LIMIT" + limite;
+        } else {
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order + " DESC " + "LIMIT " + limite;
+        }
+
+        // Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
+
+    /**
+     * Select record con join tra due tabelle, ordinamento e limit
+     *
+     * @param select colonne da prelevare
+     * @param table_1 nome della prima tabella
+     * @param table_2 nome della seconda tabella
+     * @param join_condition condizione del join tra la tabelle
+     * @param where_condition condizione per il filtro dei dati
+     * @param order ordinamento dei dati
+     * @param offset limite da cui estrarre i dati
+     * @param row_count numero di dati da estrarre
+     * @return dati prelevati
+     * @throws java.sql.SQLException
+     */
+    public static ResultSet selectJoin(String select, String table_1, String table_2, String join_condition, String where_condition, String order, int offset, int row_count) throws SQLException {
+        // Generazione query
+        String query;
+
+        int start = offset * row_count;
+        if (where_condition.equals("")) {
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " ORDER BY " + order + " LIMIT " + start + "," + row_count;
+        } else {
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition + " WHERE " + where_condition + " ORDER BY " + order + " LIMIT " + start + "," + row_count;
+        }
+// Esecuzione query
+        return Intermedio.executeQuery(query);
+    }
+
+    /**
+     * Select record con join tra due tabelle, ordinamento e limit
+     *
+     * @param select colonne da prelevare
+     * @param table_1 nome della prima tabella
+     * @param table_2 nome della seconda tabella
+     * @param table_3 nome della terza tabella
+     * @param join_condition_1 condizione del join tra la tabelle
+     * @param join_condition_2 condizione del join tra la tabelle
+     * @param where_condition condizione per il filtro dei dati
+     * @param order ordinamento dei dati
+     * @param offset limite da cui estrarre i dati
+     * @param row_count numero di dati da estrarre
+     * @return dati prelevati
+     * @throws java.sql.SQLException
+     */
+    public static ResultSet selectJoin(String select, String table_1, String table_2, String table_3, String join_condition_1, String join_condition_2, String where_condition, String order, int offset, int row_count) throws SQLException {
+        // Generazione query
+        String query;
+        int start = offset * row_count;
+        if (where_condition.equals("")) {
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " ORDER BY " + order + " DESC" + " LIMIT " + start + "," + row_count;
+        } else {
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " WHERE " + where_condition + " ORDER BY " + order + " DESC" + " LIMIT " + start + "," + row_count;
         }
 // Esecuzione query
         return Intermedio.executeQuery(query);
@@ -165,6 +264,7 @@ public class Intermedio {
 
     /**
      *
+     * @param select
      * @param table_1
      * @param table_2
      * @param table_3
@@ -175,17 +275,18 @@ public class Intermedio {
      * @return
      * @throws SQLException
      */
-    public static ResultSet selectJoin(String table_1, String table_2,String table_3, String join_condition_1,String join_condition_2, String where_condition, String order) throws SQLException {
+    public static ResultSet selectJoin(String select, String table_1, String table_2, String table_3, String join_condition_1, String join_condition_2, String where_condition, String order) throws SQLException {
         // Generazione query
         String query;
         if (where_condition.equals("")) {
-            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " ORDER BY " + order + " DESC";
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " ORDER BY " + order + " DESC";
         } else {
-            query = "SELECT * FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " WHERE " + where_condition + " ORDER BY " + order + " DESC";
+            query = "SELECT " + select + " FROM " + table_1 + " JOIN " + table_2 + " ON " + join_condition_1 + " JOIN " + table_3 + " ON " + join_condition_2 + " WHERE " + where_condition + " ORDER BY " + order + " DESC";
         }
 // Esecuzione query
         return Intermedio.executeQuery(query);
     }
+
     /**
      * Insert record
      *
@@ -196,7 +297,7 @@ public class Intermedio {
      * @throws java.io.IOException
      * @throws java.lang.ClassNotFoundException
      */
-    public static int insertRecord1(String table, Map<String, Object> data) throws SQLException, IOException, ClassNotFoundException {
+    public static int insertRecord(String table, Map<String, Object> data) throws SQLException, IOException, ClassNotFoundException {
         String query1 = "";
         String query2 = "";
         Object value;
@@ -209,7 +310,7 @@ public class Intermedio {
             if (value instanceof Integer) {
                 query2 = query2 + value + ", ";
             } else {
-                value = value.toString().replace("\'", "\\'");
+                value = Gestione.addSlashes(Gestione.spaceTrim(value.toString()));
                 query2 = query2 + "'" + value + "', ";
 
             }
@@ -218,28 +319,6 @@ public class Intermedio {
         query2 = query2.substring(0, query2.length() - 2);
         String query = "INSERT INTO " + table + " (" + query1 + ") VALUES (" + query2 + ")";
 
-        return Intermedio.updateQuery(query);
-    }
-
-    public static int insertRecord(String table, Map<String, Object> data) throws SQLException {
-        // Generazione query
-        String query = "INSERT INTO " + table + " SET ";
-        Object value;
-        String attr;
-
-        for (Map.Entry<String, Object> e : data.entrySet()) {
-            attr = e.getKey();
-            value = e.getValue();
-            System.out.print(value);
-            if (value instanceof Integer) {
-                query = query + attr + " = " + value + ", ";
-            } else {
-                value = value.toString().replace("\'", "\\'");
-                query = query + attr + " = '" + value + "', ";
-            }
-        }
-        query = query.substring(0, query.length() - 2);
-        // Esecuzione query
         return Intermedio.updateQuery(query);
     }
 
@@ -257,15 +336,14 @@ public class Intermedio {
         String query = "UPDATE " + table + " SET ";
         Object value;
         String attr;
-
         for (Map.Entry<String, Object> e : data.entrySet()) {
             attr = e.getKey();
             value = e.getValue();
-            if (value instanceof String) {
-                value = value.toString().replace("\'", "\\'");
-                query = query + attr + " = '" + value + "', ";
-            } else {
+            if (value instanceof Integer) {
                 query = query + attr + " = " + value + ", ";
+            } else {
+                value = Gestione.addSlashes(Gestione.spaceTrim(value.toString()));
+                query = query + attr + " = '" + value + "', ";
             }
 
         }
@@ -303,11 +381,10 @@ public class Intermedio {
         // Generazione query
         String query;
         if (condition.equals("")) {
-        query = "SELECT COUNT(*) FROM " + table;
+            query = "SELECT COUNT(*) FROM " + table;
         } else {
-        query = "SELECT COUNT(*) FROM " + table + " WHERE " + condition;
+            query = "SELECT COUNT(*) FROM " + table + " WHERE " + condition;
         }
-        // Generazione query
         // Esecuzione query
         ResultSet record = Intermedio.executeQuery(query);
         record.next();

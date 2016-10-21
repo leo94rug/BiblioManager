@@ -7,10 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,8 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Book;
-import model.Comment;
+import utilita.Controller;
 import utilita.FreeMarker;
 import utilita.Gestione;
 import utilita.Intermedio;
@@ -39,76 +35,41 @@ public class Insert_comment extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private String testo;
-    private String email;
     private int valutazione;
-    private String libro_fk;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
-
-        libro_fk = request.getParameter("isbn");
-
-        List<Comment> comments = new ArrayList();
-        comments = Gestione.commenti_data_pub(libro_fk);
-        data.put("comments", comments);
-        Book book = Gestione.detail_book(libro_fk);
-        data.put("book", book);
-        data = Gestione.getPage(request, data);
-        response.setContentType("text/html;charset=UTF-8");
+        if (!Intermedio.isConnect()) {
+            Intermedio.connect();
+        }
+        data = Controller.addTypeUser(request, data);
         if (Gestione.session_check(request)) {
-            int tipo =Gestione.getType(request);
-            data.put("admin", tipo);
-            data.put("sessione", true);
-            testo = request.getParameter("testo");
-            email = Gestione.getEmail(request);
-            if (Gestione.controllo_esistenza("libro", "feedback", "isbn=libro_fk", "user_fk", email, "isbn", libro_fk)) {
-                try {
-                    Map<String, Object> data2 = new HashMap<String, Object>();
-                    this.valutazione = 5;
-                    data2.put("user_fk", this.email);
-                    data2.put("libro_fk", this.libro_fk);
-                    data2.put("valutazione", this.valutazione);
-                    data2.put("commento", this.testo);
-                    data2.put("approvato", 0);
-
-                    int k = Intermedio.insertRecord1("feedback", data2);
-                    if (k > 0) {
-                        PrintWriter out = response.getWriter();
-                        out.println("<script type=\"text/javascript\">");
-                        out.println("alert('Commento inserito!');");
-                        out.println("</script>");
-                        comments = Gestione.commenti_data_pub(libro_fk);
-                        data.put("comments", comments);
-                        FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
-
-                    }
-                } catch (SQLException ex) {
-                    PrintWriter out = response.getWriter();
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('ERRORE database (ins), cod:" + ex.getMessage() + "');");
-                    out.println("</script>");
-
-                    FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
-                }
+            if (Gestione.controllo_esistenza("libro", "feedback", "isbn=libro_fk", "user_fk", Gestione.getEmail(request), "isbn", request.getParameter("isbn"))) {
+                Map<String, Object> data2 = new HashMap<String, Object>();
+                this.valutazione = 5;
+                data2.put("user_fk", Gestione.getEmail(request));
+                data2.put("libro_fk", request.getParameter("isbn"));
+                data2.put("valutazione", this.valutazione);
+                data2.put("commento", Gestione.spaceTrim(request.getParameter("testo")));
+                data2.put("approvato", 0);
+                Intermedio.insertRecord("feedback", data2);
+                PrintWriter out = response.getWriter();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Commento inserito, attendi la moderazione!');");
+                out.println("</script>");
             } else {
                 PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Hai già commentato!');");
                 out.println("</script>");
-
-                FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
             }
         } else {
-            data.put("sessione", false);
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Entra con il tuo account per continuare');");
-            out.println("</script>");
-
+            data = Controller.getPage(request, data, "");
             FreeMarker.process("index.jsp", data, response, getServletContext());
         }
+        data = Controller.ottieniLibro(request, data);
+        FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
