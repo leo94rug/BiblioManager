@@ -8,7 +8,7 @@
                     <p>Ha pubblicato ${user.pubblicazioni} libri</p>
                     <time class="published" datetime="2015-10-20">${user.iscrizione}</time>
                 </header>
-                <a href="<#if (sessione)>profilo?email=${user.email}<#else>#menu</#if>" class="image"><img src="${user.img_url}" alt="" /></a>
+                <a href="<#if (sessione)>profilo?email=${user.email}<#else>#menu</#if>" class="image"><img src="${user.img_user}" alt="" /></a>
             </article>
         </li>
         </#list>

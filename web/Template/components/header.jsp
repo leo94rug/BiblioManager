@@ -32,8 +32,8 @@
             </li>
 
 
-            <li class="menu">
-                <a class="fa-bars" href="#menu">Menu</a>
+            <li class="menu men">
+                
             </li>
         </ul>
     </nav>

@@ -619,3 +619,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.cerc').append("<a href='#menu'>Cerca un libro</a>");
 });
+
+
+$(document).ready(function () {
+    $('.men').append("<a class='fa-bars' href='#menu'>Menu</a>");
+});

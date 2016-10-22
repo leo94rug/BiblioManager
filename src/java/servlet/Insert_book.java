@@ -79,6 +79,19 @@ public class Insert_book extends HttpServlet {
             Part p = null;
             long size = 0;
             String type = null;
+            String testo;
+             int count=1;
+            String d= Integer.toString(count);
+            while(!(request.getParameter(d)== null)){
+                Map<String, Object> data4 = new HashMap<String, Object>();
+                testo= request.getParameter(d);
+                data4.put("testo", testo);
+                data4.put("book_fk", isbn);
+                data4.put("num_cap", count);
+                Intermedio.insertRecord("capitoli", data4);  
+                count++;
+                d= Integer.toString(count);
+            }
 
             if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
                 p = request.getPart("photo");

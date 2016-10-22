@@ -34,6 +34,15 @@
                         <div style="text-align: left;"><h3>Dove Comprarlo</h3></div>
                         <input type="text" class="form-control"  name="link_buy"  value="${book.link_buy}">
                     </div>
+                    <#list capitolo as cap>
+
+                    <div class="form-group fot">
+                        <div style="text-align: left;"><h3>Capitolo ${cap.num_cap}</h3></div>
+                        <input type="text" class="form-control"  name="${cap.num_cap}"  value="${cap.testo}">
+                    </div>
+
+
+                    </#list>
                 </div>
                 <div class="col-md-12 destra centra">
                     <div class="form-group fot">

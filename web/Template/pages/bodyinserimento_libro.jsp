@@ -20,6 +20,18 @@
                         <img class="upload" src="images/uploadd.png" alt="" />
                         <input type="file" name="photo"/>
                     </label>
+                    <br>
+
+                    <input type="button" value="Aggiungi Capitolo" onclick="addRow('dataTable')" />  
+
+                    <input type="button" value="Cancella Capitolo" onclick="deleteRow('dataTable')" />  
+
+
+                    <table id="dataTable" width="350px" border="1">  
+                        <tr>   
+
+                        </tr>  
+                    </table>  
                     <ul class="actions pagination centra sopra">
                         <li><input type="submit"  class="button big " value="Inserisci"></li>
                     </ul>

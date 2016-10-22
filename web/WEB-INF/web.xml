@@ -132,6 +132,6 @@
     </welcome-file-list>
     <context-param>
         <param-name>uploads.directory</param-name>
-        <param-value>C:\Users\leo\Documents\NetBeansProjects\BiblioManager\web\cover</param-value>
+        <param-value>C:\Users\MatteoR\Documents\NetBeansProjects\BiblioManager\web\cover</param-value>
     </context-param>
 </web-app>

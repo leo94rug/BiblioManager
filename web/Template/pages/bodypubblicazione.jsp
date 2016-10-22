@@ -55,7 +55,7 @@
             </header>
         </article>
         <hr align="left" size="1" width="100%" color="#b6b4b4" noshade>
-        <div class="centra"><h2>Recenzioni</h2></div><br>
+        <div class="centra"><h2>Recensioni</h2></div><br>
         <ul class="posts">
             <#if (comments??)>
             <#list comments as commenti>

@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.Book;
+import model.Capitoli;
 import utilita.Controller;
 import utilita.FreeMarker;
 import utilita.Intermedio;
@@ -59,13 +62,16 @@ public class Modification extends HttpServlet {
 
     protected void goToPage(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
+        List<Capitoli> capitolo = new ArrayList();
         if (!Intermedio.isConnect()) {
             Intermedio.connect();
         }
         data = Controller.addTypeUser(request, data);
         String isbn = request.getParameter("isbn");
         Book book = Controller.detail_book(isbn);
+        capitolo = Controller.ottieni_capitolo(isbn);
         data.put("book", book);
+        data.put("capitolo", capitolo);
         FreeMarker.process("modificalibro.jsp", data, response, getServletContext());
 
     }
@@ -158,6 +164,17 @@ public class Modification extends HttpServlet {
                     data2.put("url_img", path + ".dat");
                 }
                 Intermedio.updateRecord("libro", data2, "isbn='" + this.isbn + "'");
+                int count = 1;
+                String testo;
+                String d = Integer.toString(count);
+                while (!(request.getParameter(d) == null)) {
+                    Map<String, Object> data4 = new HashMap<String, Object>();
+                    testo = request.getParameter(d);
+                    data4.put("testo", testo);
+                    Intermedio.updateRecord("capitoli", data4, "book_fk='" + this.isbn + "'" + "AND " + "num_cap=" + count);
+                    count++;
+                    d = Integer.toString(count);
+                }
                 Controller.add_modify(" ha modificato il libro: ", Gestione.getEmail(request), isbn);
                 PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");

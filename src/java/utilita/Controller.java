@@ -20,7 +20,8 @@ import model.*;
  * @author leo
  */
 public class Controller {
-        public static void add_modify(String tipo_modifica, String utente, String libro) throws SQLException, IOException, ClassNotFoundException {
+
+    public static void add_modify(String tipo_modifica, String utente, String libro) throws SQLException, IOException, ClassNotFoundException {
         Map<String, Object> data = new HashMap<String, Object>();
 
         data.put("utente_fk", utente);
@@ -116,7 +117,7 @@ public class Controller {
         Intermedio.updateRecord("utente", data, "email='" + email + "'");
     }
 
-        public static List<Capitoli> ottieni_capitolo(String isbn) throws SQLException, IOException {
+    public static List<Capitoli> ottieni_capitolo(String isbn) throws SQLException, IOException {
         List<Capitoli> capitolo = new ArrayList();
         ResultSet rs = Intermedio.selectRecord("capitoli", "book_fk='" + isbn + "'");
         while (rs.next()) {

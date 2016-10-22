@@ -66,8 +66,7 @@
     <#include "../components/last_modify.jsp">
     <!-- Active user -->
     <#include "../components/active_user.jsp">
-    <!-- About -->
-    <#include "../components/about.jsp">
+
     <!-- Footer -->
     <#include "../components/footer.jsp">
 </section>

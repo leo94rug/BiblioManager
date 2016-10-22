@@ -7,6 +7,8 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.logging.Logger;
 import utilita.Gestione;
 
 /**
@@ -17,10 +19,12 @@ public class Capitoli {
 
     private String testo;
     private String book_fk;
+    private int num_cap;
 
     public Capitoli(ResultSet rs) throws SQLException {
-        this.testo = Gestione.stripSlash(rs.getString("testo"));
-        this.book_fk = Gestione.stripSlash(rs.getString("book_fk"));
+        this.testo = rs.getString("testo");
+        this.book_fk = rs.getString("book_fk");
+        this.num_cap = rs.getInt("num_cap");
     }
 
     public String getTesto() {
@@ -37,6 +41,14 @@ public class Capitoli {
 
     public void setBook_fk(String book_fk) {
         this.book_fk = book_fk;
+    }
+
+    public int getNum_cap() {
+        return num_cap;
+    }
+
+    public void setNum_cap(int num_cap) {
+        this.num_cap = num_cap;
     }
 
 }
