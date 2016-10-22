@@ -30,6 +30,7 @@ public class Profilo extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
         Map<String, Object> data = new HashMap<String, Object>();
+       int utents = 0;
         List<Book> mypb = new ArrayList();
         if (!Intermedio.isConnect()) {
             Intermedio.connect();
@@ -39,10 +40,11 @@ public class Profilo extends HttpServlet {
             String email = request.getParameter("email");
             if (email.equals("")) {
                 email = Gestione.getEmail(request);
+                utents=1;
             }
             Utente utente = Controller.utente(email);
             mypb = Controller.libri_data_pub(0, 1, "email='" + email + "'", "email");
-
+            data.put("utents", utents);
             data.put("utente", utente);
             data.put("libro", mypb);
             FreeMarker.process("paginapersonale.jsp", data, response, getServletContext());
