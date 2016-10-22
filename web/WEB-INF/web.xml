@@ -18,6 +18,10 @@
             <file-size-threshold>1048576</file-size-threshold>
         </multipart-config>
     </servlet>
+    <servlet>
+        <servlet-name>Ricercanol</servlet-name>
+        <servlet-class>servlet.Ricercanol</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Modification</servlet-name>
         <url-pattern>/modifica</url-pattern>
@@ -123,6 +127,10 @@
     <servlet-mapping>
         <servlet-name>profmod</servlet-name>
         <url-pattern>/profmod</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Ricercanol</servlet-name>
+        <url-pattern>/Ricercanol</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -21,11 +21,6 @@ import utilita.Intermedio;
 
 public class Search extends HttpServlet {
 
-    protected void goToPage(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("sessione", true);
-        FreeMarker.process("search.jsp", data, response, getServletContext());
-    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -136,7 +131,7 @@ public class Search extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            goToPage(request, response);
+            processRequest(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
         }

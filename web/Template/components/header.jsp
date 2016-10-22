@@ -6,7 +6,7 @@
             <#if ( sessione)>
             <li><a href="homepage">Homepage</a></li>
             <li><a href="inserimento">Inserimento libro</a></li>
-            <li class="cerc"><noscript><a href="Search">Cerca un libro</a></noscript></li>
+            <li class="cerc"><noscript><a href="Ricercanol">Cerca un libro</a></noscript></li>
             <li><noscript><a href="profilo?email="> Pagina Personale</a></noscript></li>
             <#else>
             <li><a href="homepage">Homepage</a></li>

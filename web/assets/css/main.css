@@ -3455,3 +3455,11 @@ body.is-menu-visible #menu {
     }
 
 }
+
+.bin{
+    width: 45% !important;
+    margin-left: 10%;
+}
+#order{
+    margin-left: 3%;
+}

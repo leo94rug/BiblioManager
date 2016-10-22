@@ -1,17 +1,6 @@
 <!-- Main -->
 <div id="main">
-    <form action="homepage" method="post">
-        <select name="order">
-            <option <#if order=0> selected </#if> value="0">Titolo</option>
-            <option <#if order=1> selected </#if> value="1">Autore</option>
-            <option <#if order=2> selected </#if> value="2">Anno</option>
-            <option <#if order=3> selected </#if> value="3">ISBN</option>
-            <option <#if order=4> selected </#if> value="4">Editore</option>
-            <option <#if order=5> selected </#if> value="5">Ultimi inserimenti</option>
-        </select>
-        <br><br>
-        <input type="submit" value="ordina">
-    </form>
+
     <!-- Libro -->
     <#if (books??)>
     <#list books as libro>
@@ -60,6 +49,20 @@
         <header>
             <h2>HANDSOME LIBRARY</h2>
             <p>Leggere un libro non è uscire dal mondo, ma entrare nel mondo attraverso un altro ingresso.</p>
+            <form action="homepage" method="post">
+                <div class="row">
+                <select name="order" style="   width: 45% ; margin-left: 10%;">
+                    <option <#if order=0> selected </#if> value="0">Titolo</option>
+                    <option <#if order=1> selected </#if> value="1">Autore</option>
+                    <option <#if order=2> selected </#if> value="2">Anno</option>
+                    <option <#if order=3> selected </#if> value="3">ISBN</option>
+                    <option <#if order=4> selected </#if> value="4">Editore</option>
+                    <option <#if order=5> selected </#if> value="5">Ultimi inserimenti</option>
+                </select>
+                <input type="submit" value="ordina" style="margin-left: 3%;">
+                <br><br>
+                </div>
+            </form>
         </header>
     </section>
     <!-- Mini Posts -->
