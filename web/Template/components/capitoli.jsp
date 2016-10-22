@@ -7,7 +7,7 @@
             <article>
                 
                 <header>
-                    <h3> Capitolo : ${cap.testo}</h3>
+                    <h3> Capitolo ${cap.num_cap}: </h3><label>${cap.testo}</label>
                 </header>
               
             </article>

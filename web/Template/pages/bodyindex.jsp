@@ -10,7 +10,7 @@
             <option <#if order=5> selected </#if> value="5">Ultimi inserimenti</option>
         </select>
         <br><br>
-        <input type="submit">
+        <input type="submit" value="ordina">
     </form>
     <!-- Libro -->
     <#if (books??)>
