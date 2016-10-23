@@ -33,7 +33,7 @@
                 <h6><span class="name">${book.autore}</span></h6>
             </div>
         </header>
-            
+
         <a href="${book.url_img}" class="image featured"><img class="dim" src="${book.url_img}" alt="" /></a>
         <div class="row">
             <div class="col-md-12">
@@ -79,6 +79,8 @@
             <p>non</p>
             </#if>
         </ul>
+
+
         <ul>
             <h2>Inserisci un commento</h2>
             <textarea name="testo" form="form_commento" rows="4" cols="50"></textarea>
@@ -95,7 +97,7 @@
 <section id="sidebar">
     <!-- Mini Posts -->
     <#include "../components/ultime_modifiche.jsp">
-     <#include "../components/capitoli.jsp">
+    <#include "../components/capitoli.jsp">
 
     <!-- Footer -->
     <#include "../components/footer.jsp">
