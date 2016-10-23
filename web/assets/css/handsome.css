@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 /* 
     Created on : 29-set-2016, 12.29.03
-    Author     : MatteoR
+    Author     :
 */
 
 .centra{
@@ -95,10 +95,10 @@ and open the template in the editor.
 
 .libs{
     height: 20%;
-    width: 20%;
     margin-left: 2%;
     margin-right: 2%;
     max-height: 174px;
+    max-width: 400px;
 }
 
 .libsd{
@@ -118,8 +118,12 @@ and open the template in the editor.
     margin-top: 10%;
     height: 20%;
 }
+
+.ope{
+ width: 45% ; 
+ margin-left: 10%;
+}
+ 
 .inp{
-    width: 80% !important;
-    margin-bottom: 6%;
-    margin-left: 10%;
+    margin-left: 3%;
 }

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author leo
+ * @author
  */
 public class Intermedio {
 

@@ -12,7 +12,7 @@ import utilita.Gestione;
 
 /**
  *
- * @author leo
+ * @author 
  */
 public class Storic {
 

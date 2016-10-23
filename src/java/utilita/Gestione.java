@@ -11,7 +11,7 @@ import model.Utente;
 
 /**
  *
- * @author leo
+ * @author 
  */
 public class Gestione extends HttpServlet {
 
@@ -193,7 +193,7 @@ public class Gestione extends HttpServlet {
     }
 
     public static Utente checkUser(String email, String password) throws SQLException, IOException {
-       // password = crypt(password);
+       password = crypt(password);
         if ((email == null) || (password == null)) {
             return null;
         } else {

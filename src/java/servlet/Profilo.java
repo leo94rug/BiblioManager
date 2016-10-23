@@ -43,7 +43,7 @@ public class Profilo extends HttpServlet {
                 utents=1;
             }
             Utente utente = Controller.utente(email);
-            mypb = Controller.libri_data_pub(0, 1, "email='" + email + "'", "email");
+            mypb = Controller.libri_data_pub(0, 8, "email='" + email + "'", "email");
             data.put("utents", utents);
             data.put("utente", utente);
             data.put("libro", mypb);

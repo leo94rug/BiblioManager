@@ -62,7 +62,7 @@
                         <input type="text" class="form-control"  name="link_download"  placeholder="Link Download">
                     </div>
                     <div class="form-group fot">                   
-                        <input type="password" class="form-control"  name="link_buy"  placeholder="Dove Comprarlo">
+                        <input type="text" class="form-control"  name="link_buy"  placeholder="Dove Comprarlo">
                     </div>
                     <h2>Inserisci una Descrizione</h2>
                     <textarea  rows="4" cols="50" form="inserimento" name="descrizione"></textarea>

@@ -22,7 +22,7 @@ import utilita.Intermedio;
 
 /**
  *
- * @author leo
+ * @author 
  */
 public class Approva_comm extends HttpServlet {
 

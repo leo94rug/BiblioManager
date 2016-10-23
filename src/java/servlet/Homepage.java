@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author leo
+ * @author 
  */
 public class Homepage extends HttpServlet {
 

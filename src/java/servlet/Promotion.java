@@ -22,7 +22,8 @@ import utilita.Intermedio;
 
 /**
  *
- * @author leo
+ * @author 
+ * 
  */
 public class Promotion extends HttpServlet {
 

@@ -27,7 +27,7 @@ import utilita.Gestione;
 
 /**
  *
- * @author leo
+ * @author 
  */
 public class Insert_book extends HttpServlet {
 

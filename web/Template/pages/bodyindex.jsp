@@ -51,7 +51,7 @@
             <p>Leggere un libro non è uscire dal mondo, ma entrare nel mondo attraverso un altro ingresso.</p>
             <form action="homepage" method="post">
                 <div class="row">
-                <select name="order" style="   width: 45% ; margin-left: 10%;">
+                <select name="order" class="ope">
                     <option <#if order=0> selected </#if> value="0">Titolo</option>
                     <option <#if order=1> selected </#if> value="1">Autore</option>
                     <option <#if order=2> selected </#if> value="2">Anno</option>
@@ -59,7 +59,7 @@
                     <option <#if order=4> selected </#if> value="4">Editore</option>
                     <option <#if order=5> selected </#if> value="5">Ultimi inserimenti</option>
                 </select>
-                <input type="submit" value="ordina" style="margin-left: 3%;">
+                <input type="submit" value="ordina" class="inp">
                 <br><br>
                 </div>
             </form>

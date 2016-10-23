@@ -17,7 +17,7 @@ import utilita.FreeMarker;
 
 /**
  *
- * @author MatteoR
+ * @author 
  */
 public class Ricercanol extends HttpServlet {
 
