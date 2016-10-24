@@ -48,7 +48,6 @@ public class profmod extends HttpServlet {
     private String type;
     private long size;
     private Part p;
-    private String pwd;
     private String nome;
     private String cognome;
     private String indirizzo;
@@ -77,7 +76,6 @@ public class profmod extends HttpServlet {
         data = Controller.getPage(request, data, "");
         if (Gestione.session_check(request)) {
             this.email = request.getParameter("email");
-            this.pwd = request.getParameter("pwd");
             this.nome = request.getParameter("nome");
             this.cognome = request.getParameter("cognome");
             this.indirizzo = request.getParameter("indirizzo");
@@ -121,7 +119,6 @@ public class profmod extends HttpServlet {
             }
             Map<String, Object> data2 = new HashMap<String, Object>();
             data2.put("email", this.email);
-            data2.put("pwd", this.pwd);
             data2.put("nome", this.nome);
             data2.put("cognome", this.cognome);
             data2.put("indirizzo", this.indirizzo);
@@ -130,24 +127,21 @@ public class profmod extends HttpServlet {
                 data2.put("img_user", path + ".dat");
             }
             Intermedio.updateRecord("utente", data2, "email='" + this.email + "'");
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Profilo modificato!');");
-            out.println("</script>");
-            data.put("utente", Controller.utente(email));
+            data = Controller.getPersonale(request, data);
             FreeMarker.process("paginapersonale.jsp", data, response, getServletContext());
         } else {
             data = Controller.addTypeUser(request, data);
             FreeMarker.process("index.jsp", data, response, getServletContext());
         }
     }
-
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             goToPage(request, response);
-
         } catch (Exception ex) {
             Logger.getLogger(profmod.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -169,6 +163,8 @@ public class profmod extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(profmod.class.getName()).log(Level.SEVERE, null, ex);
+                                    action_error(request,response);
+
         }
     }
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Creato il: Ott 23, 2016 alle 15:58
+-- Creato il: Ott 24, 2016 alle 23:00
 -- Versione del server: 5.6.25
 -- Versione PHP: 5.6.11
 
@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `libro` (
 
 INSERT INTO `libro` (`isbn`, `titolo`, `autore`, `editore`, `descrizione`, `url_img`, `utente_fk`, `data_ins`, `anno_pub`, `lingua`, `download`, `ultima_mod`, `buy`, `link_buy`, `link_download`, `size`, `type`, `sottotitolo`) VALUES
 ('0385504209', 'The Da Vinci Code', 'Dan Brown', 'Mondadori', 'Storico dell''arte, Dan Brown struttura il suo ultimo romanzo intorno a un''idea di base: per il severo controllo esercitato finora dalla Chiesa, la chiave del segreto del Graal andrebbe cercata nel linguaggio, spesso allusivo, della pittura. A questo porta l''avventurosa caccia al tesoro che coinvolge un esperto di simbologia, Robert Langdon, dopo l''assassinio del curatore del Louvre, Jacques Saunière (stesso cognome del parroco che a fine Ottocento rese celebre la chiesa di Rennes-le-Château con alcune rivelazioni sul Graal). È così che poco a poco, sullo sfondo d''un impianto narrativo tanto schematico quanto efficace, si staglierà la figura di una "regina cancellata" contro cui la Chiesa avrebbe condotto "la più grande opera di insabbiamento della storia". Alcuni elementi destano però scetticismo: la lettura della Vergine delle Rocce e della Gioconda è forzata; il dossier sui maestri del Priorato di Sion, perno della vicenda, citato da Brown in apertura, pare sia il falso di un esoterista, Pierre Plantard; molte teorie sul Graal contrastano con le più autorevoli interpretazioni tradizionali, per accogliere invece quelle esposte anni fa in un vendutissimo e discutibile saggio da Baigent, Leigh e Lincoln (Brown a uno studioso del Graal dà nome Leigh Teabing, con riferimento, anche tramite anagramma, ai primi due); la cifra qui avanzata di cinque milioni di "streghe" uccise dall''Inquisizione è cinquanta volte maggiore di quella reale. Ma forse la novità, per così dire, più esplosiva del volume - si spera non dovuta all''autore - è che la Torre dell''orologio a Londra non si chiamerebbe Big Ben, bensì "Big Bang".', '0385504209_59.dat', 'matteoricci229@gmail.com', '2016-10-23 13:29:53', 2003, 'italiano', 1, NULL, 1, 'www.lafeltrinelli.it', 'danbrown.com', 335861, 'jpg', NULL),
+('1234567', 'dddd', 'ssss', 'ddd', 'aaaaaaaaaaaaaaaaaa', 'cover.dat', 'matteoricci229@gmail.com', '2016-10-24 16:53:29', 12334, 'italiano', 1, NULL, 1, 'aaaaaa', 'www.google.com', NULL, 'jpg', NULL),
 ('9788844034559', 'Cioccolato', 'Edimedia,sas', 'Giunti editore', 'Il "cibo degli dei" è l''ingrediente principe di tante prelibate ricette, dolci e salate, che deliziano l''olfatto e il palato. Oltre a insoliti primi e secondi piatti, una grandissima varietà di dolci e dessert: cioccolata in tazza, mousse ai vari sapori, torte farcite, meringhe, profiteroles, semifreddi, gelati, cioccolatini, tartufi.', '9788844034559_45.dat', 'matteoricci229@gmail.com', '2016-10-23 13:45:30', 2007, 'italiano', 0, NULL, 1, 'www.ibs.it', NULL, 9506, 'jpg', NULL),
 ('9788846738776', 'Dal silenzio la musica. Il pianoforte e la costruzione interiore del pezzo musicale', 'Giovanni Carmassi', 'ETS', 'Dialogando con Piero Ferrucci, il maestro Giovanni Carmassi illustra il nucleo essenziale della sua impostazione pianistica: prima di essere eseguito, il pezzo musicale deve essere ideato e costruito nella mente del musicista. Nei vari capitoli sono esaminati i capisaldi su cui si basa l''arte del pianoforte: il peso del corpo nell''espressione del colore, il respiro, la pausa, il silenzio, il ritmo e il tempo, il ruolo della memoria, il rapporto col pubblico, il contesto storico, l''orchestrazione del pianoforte, i pericoli dello stereotipo, del meccanicismo e dell''esibizione narcisistica. Questo libro è una guida per ogni musicista o aspirante tale per avere indicazioni di immediata utilità pratica. Grazie alla sua natura dialogica, rende espliciti concetti e accorgimenti che, magari scontati per un maestro, possono sfuggire all''allievo. Lo scopo ultimo è di mostrare quanto nell''esecuzione pianistica partecipi tutto l''essere: la mente e il cuore, la memoria e l''attenzione, la cultura e l''istinto, il corpo intero, il respiro. Attingendo alla sua grande esperienza didattica, il maestro Carmassi insegna passo passo la via per raggiungere l''interpretazione musicale più autentica e viva.', '9788846738776_832.dat', 'master_94@virgilio.it', '2016-10-23 13:54:08', 2014, 'italiano', 0, NULL, 1, 'www.lafeltrinelli.it', NULL, 30589, 'jpg', NULL),
 ('9788854195738', 'I Malavoglia', 'Giovanni Verga', 'Garzanti', 'Nel suo capolavoro, I Malavoglia (1881), Verga racconta la sventurata storia di un gruppo di poveri pescatori siciliani, ponendosi ai vertici della letteratura italiana, senza incorrere nel folklore populista che caratterizzava, e caratterizzerà, molte opere ambientate tra le classi più umili. La vicenda dei Toscano, detti "Malavoglia", di Acitrezza è emblematica della dissoluzione di un mondo che sta per essere cancellato dall''epoca moderna. Lo scrittore siciliano guarda con un velo di nostalgia e compassione all''affannoso dibattersi degli abitanti della "casa del nespolo", ma descrive con estrema crudezza la violenza dei loro rapporti e la loro vulnerabilità di fronte alla Natura e alla Storia.', '9788854195738_530.dat', 'master_94@virgilio.it', '2016-10-23 09:49:29', 1993, 'italiano', 0, NULL, 1, 'www.lafeltrinelli.it', NULL, 11695, 'jpg', NULL),
@@ -153,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `storico` (
   `utente_fk` varchar(100) NOT NULL,
   `descrizione` text NOT NULL,
   `book_fk` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1 COMMENT='Storico';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1 COMMENT='Storico';
 
 --
 -- Dump dei dati per la tabella `storico`
@@ -171,7 +172,8 @@ INSERT INTO `storico` (`id`, `time_stamp`, `utente_fk`, `descrizione`, `book_fk`
 (25, '2016-10-23 13:45:30', 'matteoricci229@gmail.com', 'ha inserito il libro:', '9788844034559'),
 (26, '2016-10-23 13:48:01', 'master_94@virgilio.it', 'ha commentato il libro:', '0385504209'),
 (27, '2016-10-23 13:48:42', 'matteoricci229@gmail.com', 'ha commentato il libro:', '0385504209'),
-(28, '2016-10-23 13:54:08', 'master_94@virgilio.it', 'ha inserito il libro:', '9788846738776');
+(28, '2016-10-23 13:54:08', 'master_94@virgilio.it', 'ha inserito il libro:', '9788846738776'),
+(29, '2016-10-24 16:53:29', 'matteoricci229@gmail.com', 'ha inserito il libro:', '1234567');
 
 -- --------------------------------------------------------
 
@@ -199,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `utente` (
 INSERT INTO `utente` (`email`, `n_pubblicazioni`, `pwd`, `nome`, `cognome`, `tipo`, `indirizzo`, `professione`, `iscrizione`, `img_user`) VALUES
 ('ennio@ennio.it', 0, '47bfc658557d384821eb5de8981e6299378acd90899a04e8b1b561757974c', 'Ennio', 'Morricone', 1, 'via Roma', 'Compositore', '2016-10-23 13:49:36', 'ennio@ennio.it_437.dat'),
 ('master_94@virgilio.it', 3, '24be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Leonardo', 'Ruggeri', 2, 'Sant''Elpidio a Mare', 'Studente', '2016-10-23 09:16:45', 'master_94@virgilio.it_669.dat'),
-('matteoricci229@gmail.com', 3, '24be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Matteo', 'Ricci', 2, 'Decime 23/a', 'Studente', '2016-10-23 09:18:25', 'matteoricci229@gmail.com_771.dat');
+('matteoricci229@gmail.com', 4, '24be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Matteo', 'Ricci', 2, 'Decime 23/a', 'Studente', '2016-10-23 09:18:25', 'matteoricci229@gmail.com_771.dat');
 
 --
 -- Indici per le tabelle scaricate
@@ -255,7 +257,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT per la tabella `storico`
 --
 ALTER TABLE `storico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

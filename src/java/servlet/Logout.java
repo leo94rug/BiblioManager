@@ -24,19 +24,8 @@ public class Logout extends HttpServlet {
         FreeMarker.process("index.jsp", data, response, getServletContext());
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
     }
 
     @Override
@@ -44,13 +33,24 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+        }
+    }    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(Logout.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         }
     }
-
 }

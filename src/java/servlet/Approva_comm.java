@@ -22,7 +22,7 @@ import utilita.Intermedio;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Approva_comm extends HttpServlet {
 
@@ -45,35 +45,25 @@ public class Approva_comm extends HttpServlet {
         }
         data = Controller.addTypeUser(request, data);
         if (Gestione.session_check(request)) {
+            if(request.getParameter("stato").equals("approva")){
             comm.put("approvato", 1);
             Intermedio.updateRecord("feedback", comm, "id=" + Integer.parseInt(request.getParameter("id")));
             Controller.add_modify(" ha commentato il libro: ", request.getParameter("utente"), request.getParameter("isbn"));
+            }
+            if(request.getParameter("stato").equals("elimina")){
+                Intermedio.deleteRecord("feedback", "id=" + Integer.parseInt(request.getParameter("id")));
+            }
             data = Controller.ottieniLibro(request, data);
             FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
-        } else {
-            data = Controller.getPage(request, data, "");
-            FreeMarker.process("index.jsp", data, response, getServletContext());
-        }
+        } 
+        action_error(request,response);
+    }
+
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet respons
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response
-    ) {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(Approva_comm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Approva_comm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -90,8 +80,35 @@ public class Approva_comm extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Approva_comm.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
         } catch (Exception ex) {
             Logger.getLogger(Approva_comm.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
+        }
+    }
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Approva_comm.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Approva_comm.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
         }
     }
 

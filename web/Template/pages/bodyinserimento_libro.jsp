@@ -38,34 +38,34 @@
                 </div>
                 <div class="col-md-12 destra centra">
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="titolo" id="nome" placeholder="Titolo">
+                        <input type="text" class="form-control" required name="titolo" id="nome" placeholder="Titolo">
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="autore" id="cognome" placeholder="Autore">
+                        <input type="text" class="form-control" required name="autore" id="cognome" placeholder="Autore">
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="editore"  placeholder="Editore">
+                        <input type="text" class="form-control" required name="editore"  placeholder="Editore">
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="isbn"  placeholder="ISBN">
+                        <input type="text" class="form-control" required name="isbn"  placeholder="ISBN">
                     </div>
                     <div class="form-group fot">
-                        <select name="lingua">
+                        <select required name="lingua">
                             <option value="italiano">Italiano</option>
                             <option value="inglese">Inglese</option>
                         </select>
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="anno"  placeholder="Anno Pubblicazione">
+                        <input type="text" class="form-control" required name="anno"  placeholder="Anno Pubblicazione">
                     </div>
                     <div class="form-group fot">                   
-                        <input type="text" class="form-control"  name="link_download"  placeholder="Link Download">
+                        <input type="text" class="form-control" name="link_download"  placeholder="Link Download">
                     </div>
                     <div class="form-group fot">                   
-                        <input type="text" class="form-control"  name="link_buy"  placeholder="Dove Comprarlo">
+                        <input type="text" class="form-control" name="link_buy"  placeholder="Dove Comprarlo">
                     </div>
                     <h2>Inserisci una Descrizione</h2>
-                    <textarea  rows="4" cols="50" form="inserimento" name="descrizione"></textarea>
+                    <textarea  rows="4" cols="50" form="inserimento" required name="descrizione"></textarea>
                 </div>
             </div>
         </form>

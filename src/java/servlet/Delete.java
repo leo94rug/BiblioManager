@@ -7,19 +7,24 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utilita.Controller;
 import utilita.FreeMarker;
+import utilita.Intermedio;
 
 /**
  *
- * @author 
+ * @author leo
  */
-public class Ricercanol extends HttpServlet {
+public class Delete extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +36,22 @@ public class Ricercanol extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            Map<String, Object> data = new HashMap<String, Object>();
-        data.put("sessione", true);
-        FreeMarker.process("search.jsp", data, response, getServletContext());
+        Map<String, Object> data = new HashMap<String, Object>();
+        if (!Intermedio.isConnect()) {
+            Intermedio.connect();
         }
+        Controller.elimina_pubb(request);
+        data = Controller.addTypeUser(request, data);
+        data = Controller.getPage(request, data, "");
+        FreeMarker.process("index.jsp", data, response, getServletContext());
     }
+
     public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
         FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -54,7 +64,16 @@ public class Ricercanol extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+        }
     }
 
     /**
@@ -68,7 +87,16 @@ public class Ricercanol extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+        }
     }
 
     /**

@@ -64,7 +64,10 @@
                     <#if (commenti.approvato)>
                     <#else>
                     <div class="Approva">
-                        <a class="button" href="approva?id=${commenti.id}&isbn=${commenti.libro_fk}&utente=${commenti.user_fk}">Approva</a>
+                        <a class="button" href="approva?id=${commenti.id}&isbn=${commenti.libro_fk}&utente=${commenti.user_fk}&stato=approva">Approva</a>
+                    </div>
+                    <div class="Elimina">
+                        <a class="button" href="approva?id=${commenti.id}&isbn=${commenti.libro_fk}&utente=${commenti.user_fk}&stato=elimina">Elimina</a>
                     </div>
                     </#if>
                     <header>

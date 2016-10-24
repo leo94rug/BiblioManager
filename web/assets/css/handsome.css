@@ -94,11 +94,10 @@ and open the template in the editor.
 
 
 .libs{
-    height: 20%;
+    height: 200px;
     margin-left: 2%;
     margin-right: 2%;
-    max-height: 174px;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 .libsd{
@@ -134,6 +133,18 @@ and open the template in the editor.
 .titolo{
    margin-top: 8%;
    font-size: 275%;
+}
+
+.Elimina{
+    text-align: right;
+    margin-right: 2%;
+}
+
+.but_log{
+    width: 40%; 
+}
+.password{
+    width: 94% !important;
 }
 /************************************STELLE*********************************************/
 

@@ -77,8 +77,7 @@ public class Modification extends HttpServlet {
     }
 
     @SuppressWarnings("empty-statement")
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception{
         if (!Intermedio.isConnect()) {
             Intermedio.connect();
         }
@@ -176,23 +175,15 @@ public class Modification extends HttpServlet {
                     d = Integer.toString(count);
                 }
                 Controller.add_modify(" ha modificato il libro: ", Gestione.getEmail(request), isbn);
-                PrintWriter out = response.getWriter();
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Libro Modificato!');");
-                out.println("</script>");
                 data = Controller.ottieniLibro(request, data);
                 FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
-            } else {
-                data.put("sessione", false);
-                PrintWriter out = response.getWriter();
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Entra con il tuo account per continuare');");
-                out.println("</script>");
-                FreeMarker.process("index.jsp", data, response, getServletContext());
-            }
-        } else {
-            FreeMarker.process("index.jsp", data, response, getServletContext());
-        }
+            } 
+        } 
+        throw new Exception();
+    }
+
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
     }
 
     @Override
@@ -200,10 +191,9 @@ public class Modification extends HttpServlet {
             throws ServletException, IOException {
         try {
             goToPage(request, response);
-
         } catch (Exception ex) {
-            Logger.getLogger(Modification.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         }
     }
 
@@ -223,6 +213,8 @@ public class Modification extends HttpServlet {
 
         } catch (Exception ex) {
             Logger.getLogger(Modification.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
         }
     }
 }

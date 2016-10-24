@@ -17,10 +17,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author 
- */
 public class Homepage extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
@@ -33,6 +29,10 @@ public class Homepage extends HttpServlet {
         FreeMarker.process("index.jsp", data, response, getServletContext());
     }
 
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,8 +40,10 @@ public class Homepage extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         }
     }
 
@@ -52,8 +54,12 @@ public class Homepage extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
         } catch (Exception ex) {
             Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
         }
     }
 }

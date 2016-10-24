@@ -35,7 +35,6 @@ public class Insert_comment extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private int valutazione;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -47,10 +46,8 @@ public class Insert_comment extends HttpServlet {
         if (Gestione.session_check(request)) {
             if (Gestione.controllo_esistenza("libro", "feedback", "isbn=libro_fk", "user_fk", Gestione.getEmail(request), "isbn", request.getParameter("isbn"))) {
                 Map<String, Object> data2 = new HashMap<String, Object>();
-                this.valutazione = 5;
                 data2.put("user_fk", Gestione.getEmail(request));
                 data2.put("libro_fk", request.getParameter("isbn"));
-                data2.put("valutazione", this.valutazione);
                 data2.put("commento", Gestione.spaceTrim(request.getParameter("testo")));
                 data2.put("approvato", 0);
                 Intermedio.insertRecord("feedback", data2);
@@ -71,6 +68,9 @@ public class Insert_comment extends HttpServlet {
         data = Controller.ottieniLibro(request, data);
         FreeMarker.process("pubblicazione.jsp", data, response, getServletContext());
     }
+        public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
     /**
@@ -88,6 +88,7 @@ public class Insert_comment extends HttpServlet {
             processRequest(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Insert_comment.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request,response);
         }
     }
 
@@ -106,6 +107,8 @@ public class Insert_comment extends HttpServlet {
             processRequest(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Insert_comment.class.getName()).log(Level.SEVERE, null, ex);
+                        action_error(request,response);
+
         }
     }
 

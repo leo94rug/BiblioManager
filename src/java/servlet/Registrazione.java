@@ -106,6 +106,10 @@ public class Registrazione extends HttpServlet {
         FreeMarker.process("index.jsp", data, response, getServletContext());
     }
 
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> data = new HashMap<String, Object>();
@@ -122,24 +126,17 @@ public class Registrazione extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Map<String, Object> data = new HashMap<String, Object>();
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
-            Gestione.invalida(request);
-            data.put("sessione", false);
-            FreeMarker.process("index.jsp", data, response, getServletContext());
+            action_error(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
-            Gestione.invalida(request);
-            data.put("sessione", false);
-            FreeMarker.process("index.jsp", data, response, getServletContext());
+            action_error(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Registrazione.class.getName()).log(Level.SEVERE, null, ex);
-            Gestione.invalida(request);
-            data.put("sessione", false);
-            FreeMarker.process("index.jsp", data, response, getServletContext());
+            action_error(request, response);
         }
     }
 

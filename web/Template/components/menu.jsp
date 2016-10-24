@@ -29,13 +29,12 @@
     </section>
     <#else>
     <!-- Links -->
-    <form action="login" method="post">
+    <form action="login" data-parsley-validate method="post">
         <div class="container">
             <label><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="email" required>
+            <input type="text" placeholder="Enter Username" name="email" data-parsley-type="email" required>
             <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-            <label><a href="#">Dimenticato la password?</a></label>
+            <input type="password" placeholder="Enter Password" name="password" data-parsley-minlength="6" required>
         </div>
         <ul class="actions vertical">
             <li><input type="submit" value="Login" class="button big fit"></li>

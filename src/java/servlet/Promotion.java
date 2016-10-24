@@ -22,8 +22,8 @@ import utilita.Intermedio;
 
 /**
  *
- * @author 
- * 
+ * @author
+ *
  */
 public class Promotion extends HttpServlet {
 
@@ -48,13 +48,16 @@ public class Promotion extends HttpServlet {
             user.put("tipo", 2);
             String email = request.getParameter("email");
             Intermedio.updateRecord("utente", user, "email='" + email + "'");
-            Utente utente = Controller.utente(email);
-            data.put("utente", utente);
+            data = Controller.getPersonale(request, data);
             FreeMarker.process("paginapersonale.jsp", data, response, getServletContext());
         } else {
             data = Controller.getPage(request, data, "");
             FreeMarker.process("index.jsp", data, response, getServletContext());
         }
+    }
+
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,6 +76,7 @@ public class Promotion extends HttpServlet {
             processRequest(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Promotion.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         }
     }
 
@@ -91,17 +95,7 @@ public class Promotion extends HttpServlet {
             processRequest(request, response);
         } catch (Exception ex) {
             Logger.getLogger(Promotion.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

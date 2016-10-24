@@ -11,12 +11,18 @@ import model.Utente;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Gestione extends HttpServlet {
 
     static HttpSession session;
 
+    /**
+     * Controllo sull' esistenza e sulla validità della sessione
+     *
+     * @param request
+     * @return
+     */
     public static boolean session_check(HttpServletRequest request) {
         boolean check = true;
 
@@ -68,6 +74,12 @@ public class Gestione extends HttpServlet {
 
     }
 
+    /**
+     * Attivazione della sessione
+     *
+     * @param request
+     * @param type
+     */
     public static void attiva_sessione(HttpServletRequest request, int type) {
         session = request.getSession(true);
         if (session.isNew()) {
@@ -78,47 +90,119 @@ public class Gestione extends HttpServlet {
         }
     }
 
+    /**
+     * Ritorna l'email in sessione
+     *
+     * @param request
+     * @return
+     */
     public static String getEmail(HttpServletRequest request) {
         return session.getAttribute("email").toString();
     }
 
+    /**
+     * Ritorna il tipo dell'utente in sessione
+     *
+     * @return
+     */
     public static int getType() {
         return Integer.parseInt(session.getAttribute("tipo").toString());
     }
 
+    /**
+     * Ritorna il tipo di utente in sessione
+     *
+     * @param tipo
+     */
     public static void setType(int tipo) {
-        String type = String.valueOf(4);
-        session.setAttribute("tipo", type);
+        session.setAttribute("tipo", String.valueOf("tipo"));
     }
 
+    /**
+     * Invalida la sessione corrente
+     *
+     * @param request
+     */
     public static void invalida(HttpServletRequest request) {
-        if(session_check(request))
-        session.invalidate();
+        if (session_check(request)) {
+            session.invalidate();
+        }
     }
 
+    /**
+     * Controlla l'esistenza di un campo
+     *
+     * @param table
+     * @param campo
+     * @param value
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
     public static boolean controllo_esistenza(String table, String campo, String value) throws SQLException, IOException {
         ResultSet rs = Intermedio.selectRecord(table, campo + "='" + value + "'");
         return !rs.next();
     }
 
+    /**
+     * Controlla l'esistenza di un campo
+     *
+     * @param table1
+     * @param table2
+     * @param joincond
+     * @param campo
+     * @param value
+     * @return
+     * @throws SQLException
+     */
     public static boolean controllo_esistenza(String table1, String table2, String joincond, String campo, String value) throws SQLException {
         ResultSet rs = Intermedio.selectJoin(table1, table2, joincond, campo + "='" + value + "'");
         return !rs.next();
     }
 
+    /**
+     * Controlla l'esistenza di un campo
+     *
+     * @param table1
+     * @param table2
+     * @param joincond
+     * @param campo1
+     * @param value1
+     * @param campo2
+     * @param value2
+     * @return
+     * @throws SQLException
+     */
     public static boolean controllo_esistenza(String table1, String table2, String joincond, String campo1, String value1, String campo2, String value2) throws SQLException {
         ResultSet rs = Intermedio.selectJoin(table1, table2, joincond, campo1 + "='" + value1 + "' AND " + campo2 + "='" + value2 + "'");
         return !rs.next();
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static String addSlashes(String s) {
         return s.replaceAll("(['\"\\\\])", "\\\\$1");
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public static String stripSlash(String s) {
         return s.replaceAll("\\\\(['\"\\\\])", "$1");
     }
 
+    /**
+     * Controlla se la stringa corrisponde a un numero intero
+     *
+     * @param s
+     * @return
+     * @throws NumberFormatException
+     */
     public static int isNumeric(String s) throws NumberFormatException {
         //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
         //convert the string to a number, ensuring its validity
@@ -175,7 +259,6 @@ public class Gestione extends HttpServlet {
         } catch (NoSuchAlgorithmException ex) {
             return null;
         }
-
     }
 
     /**
@@ -193,7 +276,7 @@ public class Gestione extends HttpServlet {
     }
 
     public static Utente checkUser(String email, String password) throws SQLException, IOException {
-       password = crypt(password);
+        password = crypt(password);
         if ((email == null) || (password == null)) {
             return null;
         } else {

@@ -7,27 +7,18 @@
 package utilita;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author
- */
 public class Intermedio {
 
     protected static String url = "jdbc:mysql://localhost/bibliomanager";
     protected static String user = "root";
     protected static String psw = "";
-
     private static boolean isConnect = false;
     private static Connection db;
 

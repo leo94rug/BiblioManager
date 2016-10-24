@@ -14,11 +14,13 @@
             </#if>
             <#else>        
             </#if>
+            <#if utents??>
             <#if utents == 1>
             <div class="meta">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
                 <a href="profmod?email=${utente.email}" value="Modifica" class="">Modifica Profilo</a>
             </div>
+            </#if>
             </#if>
         </header>
         <div class="row">

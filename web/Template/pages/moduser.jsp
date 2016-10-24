@@ -9,7 +9,7 @@
         </header>
 
         <!-- Links -->
-        <form action="profmod" method="post" enctype="multipart/form-data">
+        <form action="profmod" method="post" data-parsley-validate enctype="multipart/form-data">
             <div class="row">
                 <input type="hidden" value="${utente.img_user}" name="old"></input>
                 <div class="col-md-12 sinistra centra">
@@ -25,22 +25,19 @@
                 </div>
                 <div class="col-md-12 destra centra">
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="nome" id="nome" value="${utente.nome}">
+                        <input type="text" class="form-control" required name="nome" id="nome" value="${utente.nome}">
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="cognome" id="cognome" value="${utente.cognome}">
+                        <input type="text" class="form-control" required name="cognome" id="cognome" value="${utente.cognome}">
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="indirizzo" id="residenza" value="${utente.indirizzo}">
+                        <input type="text" class="form-control" required name="indirizzo" id="residenza" value="${utente.indirizzo}">
                     </div>
                     <div class="form-group fot">
-                        <input type="text" class="form-control" name="professione" id="professione" value="${utente.professione}">
+                        <input type="text" class="form-control" required name="professione" id="professione" value="${utente.professione}">
                     </div>
                     <div class="form-group fot">
-                        <input type="email" class="form-control" name="email" id="email" value="${utente.email}">
-                    </div>
-                    <div class="form-group fot">                   
-                        <input type="text" class="form-control"  name="pwd" id="pwd" value="${utente.pwd}">
+                        <input type="email" class="form-control" required name="email" data-parsley-type="email" id="email" value="${utente.email}">
                     </div>
                 </div>
             </div>

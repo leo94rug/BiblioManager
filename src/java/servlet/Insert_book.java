@@ -27,7 +27,7 @@ import utilita.Gestione;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Insert_book extends HttpServlet {
 
@@ -80,17 +80,17 @@ public class Insert_book extends HttpServlet {
             long size = 0;
             String type = null;
             String testo;
-             int count=1;
-            String d= Integer.toString(count);
-            while(!(request.getParameter(d)== null)){
+            int count = 1;
+            String d = Integer.toString(count);
+            while (!(request.getParameter(d) == null)) {
                 Map<String, Object> data4 = new HashMap<String, Object>();
-                testo= request.getParameter(d);
+                testo = request.getParameter(d);
                 data4.put("testo", testo);
                 data4.put("book_fk", isbn);
                 data4.put("num_cap", count);
-                Intermedio.insertRecord("capitoli", data4);  
+                Intermedio.insertRecord("capitoli", data4);
                 count++;
-                d= Integer.toString(count);
+                d = Integer.toString(count);
             }
 
             if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
@@ -164,6 +164,10 @@ public class Insert_book extends HttpServlet {
         }
     }
 
+    public void action_error(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FreeMarker.process("error.jsp", new HashMap<String, Object>(), response, getServletContext());
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -178,10 +182,9 @@ public class Insert_book extends HttpServlet {
             throws ServletException, IOException {
         try {
             goToPage(request, response);
-
         } catch (Exception ex) {
-            Logger.getLogger(Insert_book.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Insert_book.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
         }
     }
 
@@ -200,8 +203,9 @@ public class Insert_book extends HttpServlet {
             processRequest(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(Insert_book.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Insert_book.class.getName()).log(Level.SEVERE, null, ex);
+            action_error(request, response);
+
         }
     }
 

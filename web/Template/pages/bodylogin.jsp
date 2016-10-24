@@ -1,19 +1,24 @@
     
-<form action="login" method="post" class="logs">
+<form action="login" method="post" data-parsley-validate class="logs">
+    <#if errore??>
+    <h4 style="color: red; text-align: center;">${errore}</h4>
+    </#if>
     <div class="container">
         <br>
         <h1 class="centra">Login</h1>
-        <input class="inp" type="text" placeholder="Enter Username" name="email" required>
+        <input class="inp password" type="text" placeholder="Enter Username" data-parsley-type="email" name="email" required>
 
-        <input class="inp" type="password" placeholder="Enter Password" name="password" required>
+        <input class=" inp password" type="password" data-parsley-minlength="6" placeholder="Enter Password" name="password" required>
 
     </div>
+
     <ul class="actions vertical">
-        <li><input class="inp" type="submit" value="Login" class="button big fit"></li>
+        <li class="centra"><input class="inp but_log" type="submit" value="Login" class="button big fit"></li>
     </ul>
-    <label style="margin-left: 15%;">Non hai un account <a href="registrazione">Registrati ora !!!</a></label>
+    <div class="centra"><label ">Non hai un account <a href="registrazione">Registrati ora !!!</a></label></div>
     <br>
     <br>
 
 </form>
+    
 
